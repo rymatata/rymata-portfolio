@@ -1,0 +1,1 @@
+// One server component that renders any single-color glyph.

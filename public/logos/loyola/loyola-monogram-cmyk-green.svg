@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="58.986668"
+   height="74.986664"
+   viewBox="0 0 58.986668 74.986664"
+   sodipodi:docname="loyola-monogram-cmyk-green.eps"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:page
+       x="0"
+       y="0"
+       inkscape:label="1"
+       id="page1"
+       width="58.986668"
+       height="74.986664"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <g
+     id="g1"
+     inkscape:groupmode="layer"
+     inkscape:label="1">
+    <g
+       id="group-R5">
+      <path
+         id="path2"
+         d="m 0,562.43 c 0,0 0.0117188,-320.27 0.0117188,-407.41 C 0.0117188,24.7305 175.121,46.1016 221.199,0 c 46.082,46.0781 221.192,24.7383 221.192,155.02 0,87.14 0.019,407.41 0.019,407.41 z M 375.949,93.4414 C 352.398,78.0508 321.43,70.0313 291.48,62.2695 264.422,55.2617 238.629,48.5781 221.199,36.5195 203.77,48.5898 177.98,55.2695 150.91,62.2813 120.969,70.0391 90,78.0586 66.4492,93.4414 40.9297,110.121 29.0391,132.559 29.0391,164.039 c 0,54.352 0,196.832 0,312.82 H 413.371 c -0.012,-115.988 -0.012,-258.468 -0.012,-312.82 0,-31.48 -11.89,-53.918 -37.41,-70.5976"
+         style="fill:#113430;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         transform="matrix(0.13333333,0,0,-0.13333333,0,74.986667)" />
+      <path
+         id="path3"
+         d="m 193.047,153.77 v 0 z M 351.09,122.938 H 80.0703 l 1.3867,19.375 h 4.4649 c 14.1561,0 29.2661,3.332 35.8981,6.562 3.493,8.41 3.493,68.809 3.493,132.668 0,63.852 0,124.234 -3.504,132.664 -7,3.469 -21.543,5.875 -35.8871,5.875 H 81.457 L 80.0703,439.48 H 232.598 l -1.332,-19.398 h -4.485 c -12.922,0 -26.902,-2.445 -33.843,-5.879 -3.524,-8.453 -3.524,-68.824 -3.524,-132.66 0,-64.074 0,-119.59 3.418,-127.363 7.262,-3.184 38.059,-6.633 70.594,-6.633 28.719,0 43.699,9.894 50.066,15.801 12.774,11.457 24.27,34.093 30.047,59.132 l 1.086,4.696 17.703,-4.188 -11.238,-100.05"
+         style="fill:#113430;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         transform="matrix(0.13333333,0,0,-0.13333333,0,74.986667)" />
+    </g>
+  </g>
+</svg>

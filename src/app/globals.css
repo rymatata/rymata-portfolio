@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+    /* Base Colors */
+    --white: #FFFFFF;
+    --black: #000000;
+    --gray: #787878;
+    --light-gray: #D9D9D9;
+    --tinted-gray: #63676D;
+    --dark-gray: #2F2F2F;
+    --darker-gray: #191919;
+
+    /* Purple to Orange Gradient Colors */
+    --light-purple: #E5ADFF;
+    --purple: #7B00FF;
+    --neon-pink: #FF006F;
+    --orange: #FFA01C;
+    --light-orange: #FFE497;
+
+    /* Loyola Gradient Colors */
+    --evergreen: #005A3C;
+    --light-evergreen: #89B9A9;
+
+    /* Tokens */
+    /* Default Background Gradient */
+    --gradient-bg-default: radial-gradient(71.21% 65.37% at 50% 50%,  
+                                           var(--tinted-gray) 0%, 
+                                           var(--dark-gray) 100%);
+    
+}
+
+@theme inline {
+    /* Custom theme palette is strictly used and not Tailwind's defaults */
+    --color-*: initial;
+
+    /* Fonts */
+    --font-koulen: var(--font-koulen-next);
+    --font-magra: var(--font-magra-next);
+    --font-reddit-sans: var(--font-reddit-sans-next);
+
+    /* Side Navigation Colors */
+    --color-bg-nav-head: var(--darker-gray);
+    --color-bg-nav-button: var(--dark-gray);
+}
+
+/* Home and Contact Pages Background */
+@utility bg-default {
+    background-image: var(--gradient-bg-default);
+    background-color: var(--dark-gray);
+}
+
+/* Projects and Resume Background */
+@utility bg-default-dark {
+    background-image: linear-gradient(color-mix(in srgb, var(--black) 55%, transparent), 
+                                      color-mix(in srgb, var(--black) 55%, transparent)),
+                                      var(--gradient-bg-default);
+    background-color: color-mix(in srgb, var(--black) 55%, var(--dark-gray));
+}
+
+/* About Page Background */
+@utility bg-about {
+    background-image: linear-gradient(to right,
+                                      color-mix(in srgb, var(--dark-gray) 90%, transparent) 0%,
+                                      transparent 18.75%,
+                                      transparent 81.25%,
+                                      color-mix(in srgb, var(--dark-gray) 90%, transparent) 100%);
+    background-color: var(--tinted-gray);
+}
