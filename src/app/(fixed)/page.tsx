@@ -1,3 +1,10 @@
+import { Text, AccentText } from "@/components/ui/BannerText";
+
 export default function HomePage() {
-    return <h1>Home</h1>;
+    return (
+        <Text>
+            Thoughtfully crafted,<br />
+            envisioned by <AccentText>you.</AccentText>
+        </Text>
+    );
 }

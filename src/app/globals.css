@@ -10,59 +10,111 @@
     --dark-gray: #2F2F2F;
     --darker-gray: #191919;
 
+    /* Gradients */
     /* Purple to Orange Gradient Colors */
     --light-purple: #E5ADFF;
     --purple: #7B00FF;
     --neon-pink: #FF006F;
     --orange: #FFA01C;
     --light-orange: #FFE497;
-
     /* Loyola Gradient Colors */
     --evergreen: #005A3C;
     --light-evergreen: #89B9A9;
 
     /* Tokens */
     /* Default Background Gradient */
-    --gradient-bg-default: radial-gradient(71.21% 65.37% at 50% 50%,  
-                                           var(--tinted-gray) 0%, 
+    /** Interpolated in OKLAB to match default-dark during crossfades **/
+    --gradient-bg-default: radial-gradient(71.21% 65.37% at 50% 50% in oklab,
+                                           var(--tinted-gray) 0%,
                                            var(--dark-gray) 100%);
-    
+    /* Default-Dark Background Gradient */
+    /** Default gradient pre-darkened by 55% black; drawn and quantized once, in OKLAB, to avoid gradient banding **/
+    --gradient-bg-default-dark: radial-gradient(71.21% 65.37% at 50% 50% in oklab,
+                                                color-mix(in srgb, var(--tinted-gray), var(--black) 55%) 0%,
+                                                color-mix(in srgb, var(--dark-gray), var(--black) 55%) 100%);
+    /* About Background Edge Ramp */
+    /** Edge color: the 90% dark-gray overlay pre-composited over tinted-gray, so the ramp is opaque and OKLAB applies **/
+    --about-edge: color-mix(in srgb, var(--dark-gray) 90%, var(--tinted-gray));
+    /** Smoothstep-eased stops; the slope eases to zero where the ramp meets the flat center, removing the visible line **/
+    --gradient-about-ramp: var(--about-edge) 0%,
+                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 7.41%) 16.667%,
+                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 25.93%) 33.333%,
+                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 50%) 50%,
+                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 74.07%) 66.667%,
+                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 92.59%) 83.333%,
+                           var(--tinted-gray) 100%;
+    /* Banner Text Accent Gradient */
+    --gradient-banner-accent: linear-gradient(to bottom,
+                                     var(--light-purple) 6.25%,
+                                     var(--purple) 31.731%,
+                                     var(--neon-pink) 62.5%,
+                                     var(--orange) 88.942%,
+                                     var(--light-orange) 99.519%);
 }
 
 @theme inline {
     /* Custom theme palette is strictly used and not Tailwind's defaults */
     --color-*: initial;
 
+    /* Base Colors */
+    --color-white: var(--white);
+    --color-black: var(--black);
+
     /* Fonts */
     --font-koulen: var(--font-koulen-next);
     --font-magra: var(--font-magra-next);
     --font-reddit-sans: var(--font-reddit-sans-next);
 
-    /* Side Navigation Colors */
-    --color-bg-nav-head: var(--darker-gray);
-    --color-bg-nav-button: var(--dark-gray);
+    /* Side Navigation */
+    /* Buttons */
+    --color-nav-head: var(--darker-gray);
+    --color-nav-button: var(--dark-gray);
+
+    /* Banner Text */
+    --text-banner: 4.25rem;
+    --text-banner--line-height: 1.45;
+    --text-banner--letter-spacing: -0.005em;
+    --text-banner--font-weight: 800;
+    --drop-shadow-banner: -5px 4px 0.7px color-mix(in srgb, var(--black) 25%, transparent);
 }
 
-/* Home and Contact Pages Background */
+/* Canvas color behind RouteBackground; prevents white flashes on overscroll */
+@layer base {
+    html {
+        background-color: var(--dark-gray);
+    }
+}
+
+/* Default Background; Home and Contact Pages */
+/** Base layer, always visible **/
 @utility bg-default {
     background-image: var(--gradient-bg-default);
     background-color: var(--dark-gray);
 }
 
-/* Projects and Resume Background */
+/* Default-Dark Background; Projects and Resume Pages */
+/** Opaque; fades in over the base layer **/
 @utility bg-default-dark {
-    background-image: linear-gradient(color-mix(in srgb, var(--black) 55%, transparent), 
-                                      color-mix(in srgb, var(--black) 55%, transparent)),
-                                      var(--gradient-bg-default);
-    background-color: color-mix(in srgb, var(--black) 55%, var(--dark-gray));
+    background-image: var(--gradient-bg-default-dark);
+    background-color: color-mix(in srgb, var(--dark-gray), var(--black) 55%);
 }
 
 /* About Page Background */
+/** Fade in over the base layer; one mirrored OKLAB ramp per edge, flat tinted-gray between **/
 @utility bg-about {
-    background-image: linear-gradient(to right,
-                                      color-mix(in srgb, var(--dark-gray) 90%, transparent) 0%,
-                                      transparent 18.75%,
-                                      transparent 81.25%,
-                                      color-mix(in srgb, var(--dark-gray) 90%, transparent) 100%);
+    background-image: linear-gradient(to right in oklab, var(--gradient-about-ramp)),
+                      linear-gradient(to left in oklab, var(--gradient-about-ramp));
+    background-position: left, right;
+    background-size: 18.75% 100%;
+    background-repeat: no-repeat;
     background-color: var(--tinted-gray);
+}
+
+/* Banner Text Accent Gradient */
+@utility text-banner-gradient {
+    background-image: var(--gradient-banner-accent);
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    text-box: trim-start ex alphabetic;
 }

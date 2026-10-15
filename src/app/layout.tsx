@@ -1,5 +1,6 @@
-import { Koulen, Magra, Reddit_Sans } from "next/font/google";
 import "./globals.css";
+import { RouteBackground } from "@/components/layout/RouteBackground";
+import { Koulen, Magra, Reddit_Sans } from "next/font/google";
 
 const koulen = Koulen({
     variable: "--font-koulen-next",
@@ -22,7 +23,11 @@ const redditSans = Reddit_Sans({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={`${koulen.variable} ${magra.variable} ${redditSans.variable}`}>
-            <body>{children}</body>
+            <body>
+                {/* Mounted once here, not in (fixed)/(scroll), so it persists and fades across route groups */}
+                <RouteBackground />
+                {children}
+            </body>
         </html>
     );
 }
