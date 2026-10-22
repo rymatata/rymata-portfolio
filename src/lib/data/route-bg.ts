@@ -2,16 +2,17 @@ import type { Route } from "next";
 
 // Background layer states to be rendered by RouteBackground
 /*
-*   default  (Home and Contact):     Base radial gradient only
-*   dark     (Projects and Resume):  Opaque pre-darkened gradient over the base
-*   about    (About):                Opaque About layer over the base
+*   default   (Contact):              Base radial gradient only
+*   parallax  (Home):                 Base radial gradient under a 3D net of dots and lines that shifts with the pointer
+*   dark      (Projects and Resume):  Opaque pre-darkened gradient over the base
+*   about     (About):                Opaque About layer over the base
 */
-export type Background = "default" | "dark" | "about";
+export type Background = "default" | "parallax" | "dark" | "about";
 
 // Routing a background to every path
 //* "satisfies Record<Route, ...>": Turns a missing or misspelled route into a type error
 export const routeBackgrounds = {
-    "/": "default",
+    "/": "parallax",
     "/about": "about",
     "/projects": "dark",
     "/resume": "dark",

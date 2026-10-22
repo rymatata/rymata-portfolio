@@ -26,26 +26,25 @@
     /** Interpolated in OKLAB to match default-dark during crossfades **/
     --gradient-bg-default: radial-gradient(71.21% 65.37% at 50% 50% in oklab,
                                            var(--tinted-gray) 0%,
-                                           var(--dark-gray) 100%);
+                                           var(--dark-gray)   100%);
     /* Default-Dark Background Gradient */
-    /** Default gradient pre-darkened by 55% black; drawn and quantized once, in OKLAB, to avoid gradient banding **/
+    /** Default gradient pre-darkened with a 55% opaque black overlay; drawn and quantized once, in OKLAB, to avoid gradient banding **/
     --gradient-bg-default-dark: radial-gradient(71.21% 65.37% at 50% 50% in oklab,
                                                 color-mix(in srgb, var(--tinted-gray), var(--black) 55%) 0%,
-                                                color-mix(in srgb, var(--dark-gray), var(--black) 55%) 100%);
+                                                color-mix(in srgb, var(--dark-gray),   var(--black) 55%) 100%);
     /* About Background Edge Ramp */
-    /** Edge color: the 90% dark-gray overlay pre-composited over tinted-gray, so the ramp is opaque and OKLAB applies **/
+    /** Edge Color : the 90% dark-gray overlay pre-composited over tinted-gray, making ramp opaque **/
     --about-edge: color-mix(in srgb, var(--dark-gray) 90%, var(--tinted-gray));
-    /** Smoothstep-eased stops; the slope eases to zero where the ramp meets the flat center, removing the visible line **/
+    /** Smoothstep-eased stops to remove harsh fades **/
     --gradient-about-ramp: var(--about-edge) 0%,
-                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 7.41%) 16.667%,
+                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 7.41%)  16.667%,
                            color-mix(in oklab, var(--about-edge), var(--tinted-gray) 25.93%) 33.333%,
-                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 50%) 50%,
+                           color-mix(in oklab, var(--about-edge), var(--tinted-gray) 50%)    50%,
                            color-mix(in oklab, var(--about-edge), var(--tinted-gray) 74.07%) 66.667%,
                            color-mix(in oklab, var(--about-edge), var(--tinted-gray) 92.59%) 83.333%,
                            var(--tinted-gray) 100%;
     /* Banner Text Accent Gradient */
     /** Base ramp under the drifting color blobs of text-banner-gradient **/
-    /** Interpolated in OKLAB to keep midpoints between distant hues from going dull **/
     --gradient-banner-accent: linear-gradient(90deg in oklab,
                                      var(--light-purple),
                                      var(--purple),
@@ -66,6 +65,7 @@
     /* Base Colors */
     --color-white: var(--white);
     --color-black: var(--black);
+    --color-gray: var(--gray);
 
     /* Fonts */
     --font-koulen: var(--font-koulen-next);
@@ -73,21 +73,35 @@
     --font-reddit-sans: var(--font-reddit-sans-next);
 
     /* Side Navigation */
+    --text-nav: max(0.75rem, 20 * var(--frame-px));
+    --text-nav--line-height: 1.45;
+    --text-nav--letter-spacing: -0.005em;
     /* Buttons */
     --color-nav-head: var(--darker-gray);
     --color-nav-button: var(--dark-gray);
+    /** Hover and current page only raise OKLCH lightness to keep neutral gray **/
+    --color-nav-head-hover:     oklch(from var(--darker-gray) calc(l + 0.06) c h);
+    --color-nav-button-hover:   oklch(from var(--dark-gray)   calc(l + 0.08) c h);
+    --color-nav-button-current: oklch(from var(--tinted-gray) calc(l - 0.14) c h);
+    /* Shadows */
+    --drop-shadow-nav-head:    0.1em 0.2em 0.4em    color-mix(in srgb, var(--black) 55%, transparent);
+    --drop-shadow-nav-buttons: 0em   0.2em 0.2em    color-mix(in srgb, var(--black) 60%, transparent);
+    /** Text and icons inside the head and buttons **/
+    --drop-shadow-nav-content: 0.1em 0.15em 0.025em color-mix(in srgb, var(--black) 35%, transparent);
+
+    /* Parallax Net */
+    /** Lines and dots of Home's 3D net; WebGL reads it back as the canvas' text color **/
+    /** Pure alpha change; where lines and dots overlap, their alpha stacks like real layers **/
+    --color-parallax-net: color-mix(in srgb, var(--white) 65%, transparent);
 
     /* Banner Text */
-    /** Font size is 68px at 1920×1080, scaled with the viewport; the floor keeps it legible on small windows **/
     --text-banner: max(1.75rem, 68 * var(--frame-px));
     --text-banner--line-height: 1.45;
     --text-banner--letter-spacing: -0.005em;
     --text-banner--font-weight: 800;
-    /** Shadow scales with the text **/
     --drop-shadow-banner: -0.0735em 0.0588em 0.0103em color-mix(in srgb, var(--black) 25%, transparent);
-    /** Corner gap is 80px at 1920×1080; in em so it keeps its ratio to the text at every size, floor included **/
-    --inset-banner: calc(80em / 68);
-    /** Accent Clock: Adjustable clock cycle for animation speed. Runs 100 times per loop so every blob is back at its start and the loop is seamless **/
+    --inset-banner: calc(62em / 68);
+    /** Accent Clock : Adjustable clock cycle for banner accent gradient speed **/
     --animate-banner-accent: banner-accent-flow calc(100 * 5s) linear infinite;
     @keyframes banner-accent-flow {
         to {
@@ -104,7 +118,7 @@
     }
 }
 
-/* Default Background; Home and Contact Pages */
+/* Default Background; Contact Page, and the base under Home's parallax net */
 /** Base layer, always visible **/
 @utility bg-default {
     background-image: var(--gradient-bg-default);
@@ -122,7 +136,7 @@
 /** Fade in over the base layer; one mirrored OKLAB ramp per edge, flat tinted-gray between **/
 @utility bg-about {
     background-image: linear-gradient(to right in oklab, var(--gradient-about-ramp)),
-                      linear-gradient(to left in oklab, var(--gradient-about-ramp));
+                      linear-gradient(to left in oklab,  var(--gradient-about-ramp));
     background-position: left, right;
     background-size: 18.75% 100%;
     background-repeat: no-repeat;
@@ -138,23 +152,22 @@
 
 /* Banner Text Accent Gradient */
 /** Flow: Each color is a blob on its own sine path over the base ramp **/
-/** var(--accent-spin): Resolves to the animated value on this element **/
-/** Rates are rounded to hundredths, so 100 turns of --accent-spin bring every blob back to its start **/
+/** var(--accent-spin) : Resolves to the animated value on this element **/
 @utility text-banner-gradient {
     background-image: radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.55))
-                                                        calc(50% + 40% * sin(var(--accent-spin) * 0.67)),
+                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.67)),
                                       var(--light-purple), transparent),
                       radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.86 + 2.1rad))
-                                                        calc(50% + 40% * sin(var(--accent-spin) * 0.92 + 1.3rad)),
+                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.92 + 1.3rad)),
                                       var(--purple), transparent),
                       radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.67 + 4.2rad))
-                                                        calc(50% + 40% * sin(var(--accent-spin) * 0.76 + 2.6rad)),
+                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.76 + 2.6rad)),
                                       var(--neon-pink), transparent),
                       radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.98 + 6.3rad))
-                                                        calc(50% + 40% * sin(var(--accent-spin) * 1.02 + 3.9rad)),
+                                                          calc(50% + 40% * sin(var(--accent-spin) * 1.02 + 3.9rad)),
                                       var(--orange), transparent),
                       radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.79 + 8.4rad))
-                                                        calc(50% + 40% * sin(var(--accent-spin) * 0.86 + 5.2rad)),
+                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.86 + 5.2rad)),
                                       var(--light-orange), transparent),
                       var(--gradient-banner-accent);
     background-clip: text;

@@ -8,6 +8,7 @@ This is a website built for displaying my personal portfolio. Visits and feedbac
 - React v19
 - TypeScript v5
 - [Tailwind CSS](https://tailwindcss.com) v4
+- WebGL2: Home's 3D parallax net background, adapted from [Vanta.js](https://www.vantajs.com) NET without three.js
 
 ## Getting Started
 *Requires Node.js 20.9 or later.
@@ -32,7 +33,7 @@ npm run dev
 npm run build
 ```
 
-### 5. Type Check
+### 5. Lint and Type Check
 ```bash
 npm run check
 ```
@@ -69,6 +70,7 @@ rymata-portfolio/
 │   └── lib/
 │       ├── data/                   # Site content as typed TS
 │       ├── schemas/contact.ts      # Zod schema shared by ContactForm and actions.ts
+│       ├── parallax-net/           # Home's 3D net background in raw WebGL2: scene, shaders, renderer
 │       └── hooks/                  # Custom React hooks
 ├── next.config.ts
 ├── tsconfig.json                   # Strict mode, "@/*" → "./src/*"
