@@ -14,7 +14,7 @@ export function SideNav() {
     const HomeIcon = navHead.icon;
 
     return (
-        <NavFrame aria-label="Primary" className="group fixed top-[2.6em] right-[-1.5em] z-10 flex flex-col items-end gap-[0.8em] font-koulen text-nav text-white">
+        <NavFrame aria-label="Primary" className="group fixed top-[2.6em] right-[-1.5em] z-10 flex flex-col items-end gap-[0.8em] font-koulen text-nav text-white intro:motion-safe:animate-intro-nav">
             {/* Name Card */}
             <div
                 className={`${tab} relative h-[6em] w-[19.15em] flex-col justify-center bg-nav-head pl-[2.4em] drop-shadow-nav-head has-focus-visible:outline-2 group-data-collapsed:w-[5.95em] group-data-collapsed:translate-x-[-0.5em] group-data-collapsed:hover:translate-x-[-0.8em] group-data-collapsed:hover:bg-nav-head-hover`}

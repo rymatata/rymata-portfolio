@@ -1,5 +1,5 @@
 // GLSL ES 3.00 (WebGL2) for the parallax net
-// Both programs read dot positions from a one-row float texture that the renderer rewrites every frame
+// Both programs read dot positions from a one-row float texture that the painter (gpu.ts) rewrites every frame
 
 // Lines: one instance per dot pair that can ever connect, widened on the GPU into a screen-aligned quad
 export const LINE_VERTEX = /* glsl */ `#version 300 es
@@ -72,7 +72,7 @@ flat out float vRadius;                 // px
 void main() {
     gl_Position = uViewProjection * vec4(texelFetch(uDots, ivec2(int(aDot), 0), 0).xyz, 1.0);
     vRadius = uRadius * uFocal / gl_Position.w;
-    
+
     // A px of margin on each side holds the anti-aliased rim
     gl_PointSize = 2.0 * vRadius + 2.0;
 }`;

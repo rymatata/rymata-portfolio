@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* First-load intro on Home; introScript sets data-intro on <html> and IntroGate removes it once the slides end */
+@custom-variant intro (&:where([data-intro] *));
+
 :root {
     /* Base Colors */
     --white: #FFFFFF;
@@ -56,6 +59,27 @@
 
     /* Frame Scaling */
     --frame-px: min(100vw / 1920, 100dvh / 1080);
+
+    /* Intro */
+    /** Side nav, from the right; distance resolves on the nav, % is its width and em its font size **/
+    --intro-nav-duration: 1000ms;
+    --intro-nav-delay:    1000ms;
+    --intro-nav-ease:     cubic-bezier(0.22, 1.1, 0.4, 1);
+    --intro-nav-distance: calc(100% + 1em);
+    /** Banner text, from its own side; distance clears the box, its corner inset, and the accent's bleed **/
+    --intro-banner-duration: 700ms;
+    --intro-banner-delay:    0ms;
+    --intro-banner-ease:     cubic-bezier(0.22, 1.1, 0.4, 1);
+    --intro-banner-distance: calc(100% + 1.5em);
+    /** Pause after both slides end before the parallax net fades in **/
+    --intro-net-delay: 0ms;
+}
+
+/* Read back by IntroGate; registered, so it always computes to seconds */
+@property --intro-net-delay {
+    syntax: "<time>";
+    inherits: true;
+    initial-value: 0s;
 }
 
 @theme inline {
@@ -90,9 +114,22 @@
     --drop-shadow-nav-content: 0.1em 0.15em 0.025em color-mix(in srgb, var(--black) 35%, transparent);
 
     /* Parallax Net */
-    /** Lines and dots of Home's 3D net; WebGL reads it back as the canvas' text color **/
+    /** Lines and dots of the parallax nets; WebGL reads it back as the canvas' text color **/
     /** Pure alpha change; where lines and dots overlap, their alpha stacks like real layers **/
-    --color-parallax-net: color-mix(in srgb, var(--white) 65%, transparent);
+    /** Home **/
+    --color-parallax-net:       color-mix(in srgb, var(--white) 65%, transparent);
+    /** Projects and Resume : Fainter over the darker gradient **/
+    --color-parallax-net-dark:  color-mix(in srgb, var(--white) 15%, transparent);
+    /** About : The flat net behind the headshot, over the tinted-gray About background **/
+    --color-parallax-net-about: color-mix(in srgb, var(--white) 55%, transparent);
+
+    /* About Headshot */
+    /** The net's band, 1000 px on the 1920 frame, behind a photo as tall as the band; floored for small screens, never wider than its container **/
+    --width-headshot: min(100%, max(18rem, 1000 * var(--frame-px)));
+    /** Figma's 110 px from the top of the frame **/
+    --padding-about: calc(110 * var(--frame-px));
+    /* Shadows */
+    --drop-shadow-headshot: 0em 0em 0.4em color-mix(in srgb, var(--black) 55%, transparent);
 
     /* Banner Text */
     --text-banner: max(1.75rem, 68 * var(--frame-px));
@@ -108,7 +145,29 @@
             --accent-spin: 100turn;
         }
     }
-    
+
+    /* Intro Slides */
+    /** Knobs live in :root; "both" holds each element off screen through its delay **/
+    /** transform, not translate, so the nav tabs' own translate transitions and hovers stay untouched **/
+    /** IntroGate waits on every animation named intro-* **/
+    --animate-intro-nav: intro-nav-in var(--intro-nav-duration) var(--intro-nav-ease) var(--intro-nav-delay) both;
+    --animate-intro-banner-left:  intro-banner-in-left  var(--intro-banner-duration) var(--intro-banner-ease) var(--intro-banner-delay) both;
+    --animate-intro-banner-right: intro-banner-in-right var(--intro-banner-duration) var(--intro-banner-ease) var(--intro-banner-delay) both;
+    @keyframes intro-nav-in {
+        from {
+            transform: translateX(var(--intro-nav-distance));
+        }
+    }
+    @keyframes intro-banner-in-left {
+        from {
+            transform: translateX(calc(-1 * var(--intro-banner-distance)));
+        }
+    }
+    @keyframes intro-banner-in-right {
+        from {
+            transform: translateX(var(--intro-banner-distance));
+        }
+    }
 }
 
 /* Canvas color behind RouteBackground; prevents white flashes on overscroll */
@@ -118,14 +177,14 @@
     }
 }
 
-/* Default Background; Contact Page, and the base under Home's parallax net */
+/* Default Background; the gradient on Home (under its parallax net) and Contact Pages */
 /** Base layer, always visible **/
 @utility bg-default {
     background-image: var(--gradient-bg-default);
     background-color: var(--dark-gray);
 }
 
-/* Default-Dark Background; Projects and Resume Pages */
+/* Default-Dark Background; the gradient under the parallax net on Projects and Resume Pages */
 /** Opaque; fades in over the base layer **/
 @utility bg-default-dark {
     background-image: var(--gradient-bg-default-dark);

@@ -1,6 +1,8 @@
 import "./globals.css";
+import { IntroGate } from "@/components/layout/IntroGate";
 import { RouteBackground } from "@/components/layout/RouteBackground";
 import { SideNav } from "@/components/layout/SideNav";
+import { introScript } from "@/lib/intro";
 import { Koulen, Magra, Reddit_Sans } from "next/font/google";
 
 const koulen = Koulen({
@@ -23,9 +25,14 @@ const redditSans = Reddit_Sans({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en" className={`${koulen.variable} ${magra.variable} ${redditSans.variable}`}>
+        // suppressHydrationWarning : introScript may add data-intro before React hydrates
+        <html lang="en" className={`${koulen.variable} ${magra.variable} ${redditSans.variable}`} suppressHydrationWarning>
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: introScript }} />
+            </head>
             <body>
                 {/* Components mounted here are persistent across all pages */}
+                <IntroGate />
                 <RouteBackground />
                 <SideNav />
                 {children}

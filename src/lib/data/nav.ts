@@ -5,7 +5,7 @@ import { FolderCode, House, MessagesSquare, ScrollText, SquareUserRound, type Lu
 // Any other page : Collapses to become the Home button
 export const navHead = {
     name: "Ryland Mata",
-    role: "Full stack developer",
+    role: "Full Stack Developer",
     label: "Home",
     icon: House,
 } as const;

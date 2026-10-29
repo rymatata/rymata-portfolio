@@ -8,7 +8,7 @@ This is a website built for displaying my personal portfolio. Visits and feedbac
 - React v19
 - TypeScript v5
 - [Tailwind CSS](https://tailwindcss.com) v4
-- WebGL2: Home's 3D parallax net background, adapted from [Vanta.js](https://www.vantajs.com) NET without three.js
+- WebGL2: Parallax net visuals adapted from [Vanta.js](https://www.vantajs.com) NET without three.js
 
 ## Getting Started
 *Requires Node.js 20.9 or later.
@@ -63,14 +63,18 @@ rymata-portfolio/
 │   │       ├── layout.tsx
 │   │       └── about/page.tsx      # /about
 │   ├── components/
-│   │   ├── layout/
+│   │   ├── layout/                 # Persistent chrome: SideNav, RouteBackground, ParallaxNet, IntroGate (ends the first-load intro)
 │   │   ├── ui/                     # Shared primitives
 │   │   ├── contact/                # ContactForm (client: react-hook-form + zod)
-│   │   └── about/  home/  projects/  resume/   # Page-specific sections
+│   │   ├── about/                  # Headshot (photo over its band), HeadshotNet (flat net canvas)
+│   │   └── home/  projects/  resume/   # Page-specific sections
 │   └── lib/
 │       ├── data/                   # Site content as typed TS
+│       ├── intro.ts                # First-load Home intro: pre-paint <head> script and data-intro gate (tokens in globals.css)
 │       ├── schemas/contact.ts      # Zod schema shared by ContactForm and actions.ts
-│       ├── parallax-net/           # Home's 3D net background in raw WebGL2: scene, shaders, renderer
+│       ├── parallax-net/           # Vanta NET in raw WebGL2: shaders and gpu (painter shared by both renderers)
+│       │                           #   3D route background (per-variant NET/CAMERA in scene.ts): scene, motion (shared by every variant), renderer
+│       │                           #   2D About headshot net (FLAT_NET, own clock): flat-scene, flat-renderer
 │       └── hooks/                  # Custom React hooks
 ├── next.config.ts
 ├── tsconfig.json                   # Strict mode, "@/*" → "./src/*"
