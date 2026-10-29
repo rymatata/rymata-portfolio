@@ -19,7 +19,7 @@ export interface FlatNetConfig {
 
 export const FLAT_NET = {
     width:       1500,
-    height:      350,
+    height:      356.8,
     columns:     12,
     rows:        4,
     jitter:      30,

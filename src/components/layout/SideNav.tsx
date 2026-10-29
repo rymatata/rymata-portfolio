@@ -8,7 +8,7 @@ const tab =
 // Slide transition; text rides the shrinking tab, plus enough extra to clear the edge and slide off screen
 const slideOut = "transition-[translate,visibility] duration-300 ease-in-out delay-250 group-data-collapsed:delay-0 motion-reduce:transition-none";
 
-//* Server Component shell
+// Server Component shell
 //* Comprised of Client Components: NavFrame, NavLink and the Lucide icons that ship Client JS
 export function SideNav() {
     const HomeIcon = navHead.icon;

@@ -60,7 +60,7 @@
     /* Frame Scaling */
     --frame-px: min(100vw / 1920, 100dvh / 1080);
 
-    /* Intro */
+    /* Load-in Intro */
     /** Side nav, from the right; distance resolves on the nav, % is its width and em its font size **/
     --intro-nav-duration: 1000ms;
     --intro-nav-delay:    1000ms;
@@ -124,8 +124,8 @@
     --color-parallax-net-about: color-mix(in srgb, var(--white) 55%, transparent);
 
     /* About Headshot */
-    /** The net's band, 1000 px on the 1920 frame, behind a photo as tall as the band; floored for small screens, never wider than its container **/
-    --width-headshot: min(100%, max(18rem, 1000 * var(--frame-px)));
+    /** The net's band, 948 × 225.5 px, behind a photo as tall as the band; floored for small screens, never wider than its container **/
+    --width-headshot: min(100%, max(18rem, 948 * var(--frame-px)));
     /** Figma's 110 px from the top of the frame **/
     --padding-about: calc(110 * var(--frame-px));
     /* Shadows */

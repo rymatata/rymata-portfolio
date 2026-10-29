@@ -13,10 +13,10 @@ export const navHead = {
 // Nav buttons beneath the name card; key order is the order they render in
 //* satisfies Record<...> : A new page without a button, or a misspelled route, becomes a type error
 export const navLinks = {
-    "/about": { label: "About", icon: SquareUserRound },
+    "/about":    { label: "About",    icon: SquareUserRound },
     "/projects": { label: "Projects", icon: FolderCode },
-    "/resume": { label: "Resume", icon: ScrollText },
-    "/contact": { label: "Contact", icon: MessagesSquare },
+    "/resume":   { label: "Resume",   icon: ScrollText },
+    "/contact":  { label: "Contact",  icon: MessagesSquare },
 } as const satisfies Record<Exclude<Route, "/">, { label: string; icon: LucideIcon }>;
 
 type NavHref = keyof typeof navLinks;

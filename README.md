@@ -41,44 +41,47 @@ npm run check
 ## Project Architecture
 ```
 rymata-portfolio/
-├── public/                         # Static assets, served from "/"
+├── public/                                     # Static assets, served from "/"
 │   ├── images/
-│   └── logos/                      # Full-color skill logos, lowercase kebab-case
+│   └── logos/                                  # Full-color skill logos, lowercase kebab-case
 │       ├── data-tools/  frameworks-libs/  markup-format/
 │       ├── programming-langs/  software/
-│       ├── linkedin/               # Temporary: path moves into code, then delete
+│       ├── linkedin/                           # Temporary: path moves into code, then delete
 │       └── loyola/
+│
 ├── src/
-│   ├── app/                        # App Router: routes, layouts, global CSS
-│   │   ├── layout.tsx              # Root layout
-│   │   ├── globals.css             # Tailwind import, @theme tokens
-│   │   ├── not-found.tsx           # Custom 404
-│   │   ├── (fixed)/                # Viewport-locked pages
+│   ├── app/                                    # App Router: routes, layouts, global CSS
+│   │   ├── layout.tsx                          # Root layout
+│   │   ├── globals.css                         # Tailwind import, @theme tokens
+│   │   ├── not-found.tsx                       # Custom 404
+│   │   ├── (fixed)/                            # Viewport-locked pages
 │   │   │   ├── layout.tsx
-│   │   │   ├── page.tsx            # /
-│   │   │   ├── contact/            # /contact
-│   │   │   ├── projects/page.tsx   # /projects
-│   │   │   └── resume/page.tsx     # /resume
-│   │   └── (scroll)/               # Normally scrolling pages
+│   │   │   ├── page.tsx                        # /
+│   │   │   ├── contact/                        # /contact
+│   │   │   ├── projects/page.tsx               # /projects
+│   │   │   └── resume/page.tsx                 # /resume
+│   │   └── (scroll)/                           # Normally scrolling pages
 │   │       ├── layout.tsx
-│   │       └── about/page.tsx      # /about
+│   │       └── about/page.tsx                  # /about
+│   │
 │   ├── components/
-│   │   ├── layout/                 # Persistent chrome: SideNav, RouteBackground, ParallaxNet, IntroGate (ends the first-load intro)
-│   │   ├── ui/                     # Shared primitives
-│   │   ├── contact/                # ContactForm (client: react-hook-form + zod)
-│   │   ├── about/                  # Headshot (photo over its band), HeadshotNet (flat net canvas)
-│   │   └── home/  projects/  resume/   # Page-specific sections
+│   │   ├── layout/                             # Persistent components: SideNav, RouteBackground, etc.
+│   │   ├── ui/                                 # Shared primitives
+│   │   ├── contact/                            # ContactForm (client: react-hook-form + zod)
+│   │   ├── about/  home/  projects/  resume/   # Page-specific components
+│   │
 │   └── lib/
-│       ├── data/                   # Site content as typed TS
-│       ├── intro.ts                # First-load Home intro: pre-paint <head> script and data-intro gate (tokens in globals.css)
-│       ├── schemas/contact.ts      # Zod schema shared by ContactForm and actions.ts
-│       ├── parallax-net/           # Vanta NET in raw WebGL2: shaders and gpu (painter shared by both renderers)
-│       │                           #   3D route background (per-variant NET/CAMERA in scene.ts): scene, motion (shared by every variant), renderer
-│       │                           #   2D About headshot net (FLAT_NET, own clock): flat-scene, flat-renderer
-│       └── hooks/                  # Custom React hooks
+│       ├── data/                       # Site content as typed TS
+│       ├── intro.ts                    # First-load Home intro: pre-paint <head> script and data-intro gate (tokens in globals.css)
+│       ├── schemas/contact.ts          # Zod schema shared by ContactForm and actions.ts
+│       ├── parallax-net/               # Vanta NET in raw WebGL2: shaders and gpu (painter shared by both renderers)
+│       │                               #   3D route background (per-variant NET/CAMERA in scene.ts): scene, motion (shared by every variant), renderer
+│       │                               #   2D About headshot net (FLAT_NET, own clock): flat-scene, flat-renderer
+│       └── hooks/                      # Custom React hooks
+│
 ├── next.config.ts
-├── tsconfig.json                   # Strict mode, "@/*" → "./src/*"
-├── postcss.config.mjs              # Tailwind 4 plugin only
+├── tsconfig.json                       # Strict mode, "@/*" → "./src/*"
+├── postcss.config.mjs                  # Tailwind 4 plugin only
 └── eslint.config.mjs
 ```
 
