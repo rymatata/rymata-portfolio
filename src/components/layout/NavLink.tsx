@@ -10,7 +10,11 @@ export function NavLink({ href, className, children }: { href: Route; className:
 
     return (
         // aria-current announces the active page to screen readers AND doubles as the styling hook
-        <Link href={href} className={className} aria-current={isActive ? "page" : undefined}>
+        <Link
+            href={href}
+            aria-current={isActive ? "page" : undefined}
+            className={className}
+        >
             {children}
         </Link>
     );

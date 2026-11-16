@@ -8,12 +8,16 @@ import { headshot } from "@/lib/data/about";
 //* Comprised of Client Components: HeadshotNet, Tilt
 export function Headshot() {
     return (
-        <div className="relative mx-auto aspect-948/225.5 w-headshot">
+        <div className="relative mx-auto aspect-948/225.5 w-headshot mb-11">
             <HeadshotNet className="absolute inset-0" />
 
             {/* As tall as the band and centered on it; object-top keeps the face in the upper half of the circle */}
             {/* preload : Likely the page's largest paint, so it's fetched with the HTML rather than when it's laid out */}
-            <Tilt className="absolute top-0 left-1/2 aspect-square h-full -translate-x-1/2" falloff={18} amplitude={6}>
+            <Tilt
+                falloff={18}
+                amplitude={6}
+                className="absolute top-0 left-1/2 aspect-square h-full -translate-x-1/2"
+            >
                 <div className="relative size-full overflow-hidden rounded-full drop-shadow-headshot">
                     <Image
                         src={headshot.src}

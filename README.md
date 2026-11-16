@@ -68,20 +68,20 @@ rymata-portfolio/
 │   │   ├── layout/                             # Persistent components: SideNav, RouteBackground, etc.
 │   │   ├── ui/                                 # Shared primitives
 │   │   ├── contact/                            # ContactForm (client: react-hook-form + zod)
-│   │   ├── about/  home/  projects/  resume/   # Page-specific components
+│   │   └── about/  home/  projects/  resume/   # Page-specific components
 │   │
 │   └── lib/
-│       ├── data/                       # Site content as typed TS
-│       ├── intro.ts                    # First-load Home intro: pre-paint <head> script and data-intro gate (tokens in globals.css)
-│       ├── schemas/contact.ts          # Zod schema shared by ContactForm and actions.ts
-│       ├── parallax-net/               # Vanta NET in raw WebGL2: shaders and gpu (painter shared by both renderers)
-│       │                               #   3D route background (per-variant NET/CAMERA in scene.ts): scene, motion (shared by every variant), renderer
-│       │                               #   2D About headshot net (FLAT_NET, own clock): flat-scene, flat-renderer
-│       └── hooks/                      # Custom React hooks
+│       ├── data/                               # Site content as typed TS
+│       ├── intro.ts                            # First-load Home intro: pre-paint <head> script and data-intro gate (tokens in globals.css)
+│       ├── schemas/contact.ts                  # Zod schema shared by ContactForm and actions.ts
+│       ├── parallax-net/                       # Vanta NET in raw WebGL2: shaders and gpu (painter shared by both renderers)
+│       │                                       #   3D route background (per-variant NET/CAMERA in scene.ts): scene, motion (shared by every variant), renderer
+│       │                                       #   2D About headshot net (FLAT_NET, own clock): flat-scene, flat-renderer
+│       └── hooks/                              # Custom React hooks
 │
 ├── next.config.ts
-├── tsconfig.json                       # Strict mode, "@/*" → "./src/*"
-├── postcss.config.mjs                  # Tailwind 4 plugin only
+├── tsconfig.json                               # Strict mode, "@/*" → "./src/*"
+├── postcss.config.mjs                          # Tailwind 4 plugin only
 └── eslint.config.mjs
 ```
 

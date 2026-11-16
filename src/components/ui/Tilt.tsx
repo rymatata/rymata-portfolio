@@ -32,8 +32,14 @@ export function Tilt({ className, amplitude = 12, smoothness = 0.6, perspective 
 
     // touch-pan-y touch-pinch-zoom : Vertical drags and pinches still scroll and zoom
     return (
-        <div ref={areaRef} className={`${className} touch-pan-y touch-pinch-zoom`}>
-            <div ref={bodyRef} className="size-full">
+        <div
+            ref={areaRef}
+            className={`${className} touch-pan-y touch-pinch-zoom`}
+        >
+            <div
+                ref={bodyRef}
+                className="size-full"
+            >
                 {children}
             </div>
         </div>

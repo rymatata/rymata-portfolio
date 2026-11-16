@@ -14,26 +14,35 @@ export function SideNav() {
     const HomeIcon = navHead.icon;
 
     return (
-        <NavFrame aria-label="Primary" className="group fixed top-[2.6em] right-[-1.5em] z-10 flex flex-col items-end gap-[0.8em] font-koulen text-nav text-white intro:motion-safe:animate-intro-nav">
+        <NavFrame
+            aria-label="Primary"
+            className="group fixed top-[2.6em] right-[-1.5em] z-10 flex flex-col items-end gap-[0.8em] font-koulen text-nav text-white intro:motion-safe:animate-intro-nav"
+        >
             {/* Name Card */}
-            <div
-                className={`${tab} relative h-[6em] w-[19.15em] flex-col justify-center bg-nav-head pl-[2.4em] drop-shadow-nav-head has-focus-visible:outline-2 group-data-collapsed:w-[5.95em] group-data-collapsed:translate-x-[-0.5em] group-data-collapsed:hover:translate-x-[-0.8em] group-data-collapsed:hover:bg-nav-head-hover`}
-            >
+            <div className={`${tab} relative h-[6em] w-[19.15em] flex-col justify-center bg-nav-head pl-[2.4em] drop-shadow-nav-head has-focus-visible:outline-2 group-data-collapsed:w-[5.95em] group-data-collapsed:translate-x-[-0.5em] group-data-collapsed:hover:translate-x-[-0.8em] group-data-collapsed:hover:bg-nav-head-hover`}>
                 {/* nowrap to prevent lines from skewing as the head narrows */}
                 {/* Hidden once off screen for extra insurance */}
                 <span className={`${slideOut} flex flex-col whitespace-nowrap drop-shadow-nav-content group-data-collapsed:invisible group-data-collapsed:translate-x-[3.5em]`}>
-                    <span aria-hidden="true" className="mb-[-0.6em] leading-[0.62]">{"</>"}</span>
+                    <span
+                        aria-hidden
+                        className="mb-[-0.6em] leading-[0.62]"
+                    >
+                        {"</>"}
+                    </span>
                     <span className="-mb-[calc(12em/56)] text-[2.8em]">{navHead.name}</span>
                     <span className="leading-[0.62]">
-                        <span aria-hidden="true">&lt;</span>
+                        <span aria-hidden>&lt;</span>
                         {navHead.role}
-                        <span aria-hidden="true">/&gt;</span>
+                        <span aria-hidden>/&gt;</span>
                     </span>
                 </span>
                 {/* Anchored to the right edge and enters only after the head collapses */}
                 <HomeIcon className="absolute inset-y-0 right-[2.1em] my-auto size-[1.9em] translate-x-[calc(100%+1.65em)] drop-shadow-nav-content transition-[translate] duration-150 ease-in group-data-collapsed:translate-x-0 group-data-collapsed:delay-400 group-data-collapsed:ease-out motion-reduce:transition-none" />
                 {/* Only when NOT on the Home page; covers the whole head sits on top layer. The head draws its focus ring, which its clip would cut off here */}
-                <NavLink href="/" className="absolute inset-0 hidden outline-none group-data-collapsed:block">
+                <NavLink
+                    href="/"
+                    className="absolute inset-0 hidden outline-none group-data-collapsed:block"
+                >
                     <span className="sr-only">{navHead.label}</span>
                 </NavLink>
             </div>
@@ -41,7 +50,10 @@ export function SideNav() {
             {/* Navigation Menu */}
             <ul className="flex flex-col gap-[0.8em] drop-shadow-nav-buttons">
                 {navEntries.map(([href, { label, icon: Icon }]) => (
-                    <li key={href} className="group/tab">
+                    <li
+                        key={href}
+                        className="group/tab"
+                    >
                         <NavLink
                             href={href}
                             className={`${tab} h-[calc(47.5em/20)] w-[13em] items-center bg-nav-button pl-[1.65em] group-data-collapsed:w-[5.43em] group-data-collapsed:translate-x-[-0.5em] hover:bg-nav-button-hover group-hover/tab:translate-x-[-0.3em] group-data-collapsed:hover:translate-x-[-0.8em] focus-visible:outline-2 aria-[current=page]:bg-nav-button-current`}

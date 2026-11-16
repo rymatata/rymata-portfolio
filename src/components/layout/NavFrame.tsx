@@ -8,7 +8,10 @@ export function NavFrame({ children, ...props }: React.ComponentProps<"nav">) {
     const isHome = usePathname() === "/";
 
     return (
-        <nav {...props} data-collapsed={isHome ? undefined : ""}>
+        <nav
+            {...props}
+            data-collapsed={isHome ? undefined : ""}
+        >
             {children}
         </nav>
     );

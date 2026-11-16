@@ -1,4 +1,5 @@
-import { BannerText, AccentText } from "@/components/ui/BannerText";
+import { AccentText } from "@/components/ui/AccentText";
+import { BannerText } from "@/components/ui/BannerText";
 
 export default function HomePage() {
     return (

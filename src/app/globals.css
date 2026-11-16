@@ -15,14 +15,14 @@
 
     /* Gradients */
     /* Purple to Orange Gradient Colors */
-    --light-purple: #E5ADFF;
-    --purple: #7B00FF;
-    --neon-pink: #ff0077;
-    --orange: #ff9500;
-    --light-orange: #FFE497;
+    --light-purple: #db8eff;
+    --purple: #9f46ff;
+    --neon-pink: #ff3c90;
+    --orange: #FFA01C;
+    --light-orange: #ffd86c;
     /* Loyola Gradient Colors */
-    --evergreen: #005A3C;
-    --light-evergreen: #89B9A9;
+    --evergreen: #113430;
+    --light-evergreen: #92BDB8;
 
     /* Tokens */
     /* Default Background Gradient */
@@ -46,19 +46,22 @@
                            color-mix(in oklab, var(--about-edge), var(--tinted-gray) 74.07%) 66.667%,
                            color-mix(in oklab, var(--about-edge), var(--tinted-gray) 92.59%) 83.333%,
                            var(--tinted-gray) 100%;
-    /* Banner Text Accent Gradient */
-    /** Base ramp under the drifting color blobs of text-banner-gradient **/
-    --gradient-banner-accent: linear-gradient(90deg in oklab,
-                                     var(--light-purple),
-                                     var(--purple),
-                                     var(--neon-pink),
-                                     var(--orange),
-                                     var(--light-orange));
+    /* Accent Text Gradient */
+    /** Base ramp under the drifting color blobs of text-accent-gradient **/
+    --gradient-accent: linear-gradient(90deg in oklab,
+                              var(--light-purple),
+                              var(--purple),
+                              var(--neon-pink),
+                              var(--orange),
+                              var(--light-orange));
     /** Text only paints inside the box; this covers italic overhang and glyphs above the trimmed top **/
-    --banner-accent-bleed: 0.3em;
+    --accent-bleed: 0.3em;
 
     /* Frame Scaling */
     --frame-px: min(100vw / 1920, 100dvh / 1080);
+    /** About page's Figma px; floored at 1rem / 28 so the About column, section titles, and degree text stop shrinking together **/
+    /** Paragraph text floors on its own, at text-paragraph's 1rem **/
+    --about-px: max(1rem / 28, var(--frame-px));
 
     /* Load-in Intro */
     /** Side nav, from the right; distance resolves on the nav, % is its width and em its font size **/
@@ -90,6 +93,11 @@
     --color-white: var(--white);
     --color-black: var(--black);
     --color-gray: var(--gray);
+    --color-tinted-gray: var(--tinted-gray);
+    --color-darker-gray: var(--darker-gray);
+    --color-light-gray: var(--light-gray);
+    --color-dark-gray: var(--dark-gray);
+    --color-evergreen: var(--evergreen);
 
     /* Fonts */
     --font-koulen: var(--font-koulen-next);
@@ -103,10 +111,10 @@
     /* Buttons */
     --color-nav-head: var(--darker-gray);
     --color-nav-button: var(--dark-gray);
-    /** Hover and current page only raise OKLCH lightness to keep neutral gray **/
-    --color-nav-head-hover:     oklch(from var(--darker-gray) calc(l + 0.06) c h);
-    --color-nav-button-hover:   oklch(from var(--dark-gray)   calc(l + 0.08) c h);
-    --color-nav-button-current: oklch(from var(--tinted-gray) calc(l - 0.14) c h);
+    /** Hover raises OKLCH lightness; current page drops tinted-gray's chroma to 0 (c - 1 clamps), so both stay neutral gray **/
+    --color-nav-head-hover:     oklch(from var(--darker-gray) calc(l + 0.06) c           h);
+    --color-nav-button-hover:   oklch(from var(--dark-gray)   calc(l + 0.08) c           h);
+    --color-nav-button-current: oklch(from var(--tinted-gray) l              calc(c - 1) h);
     /* Shadows */
     --drop-shadow-nav-head:    0.1em 0.2em 0.4em    color-mix(in srgb, var(--black) 55%, transparent);
     --drop-shadow-nav-buttons: 0em   0.2em 0.2em    color-mix(in srgb, var(--black) 60%, transparent);
@@ -128,8 +136,50 @@
     --width-headshot: min(100%, max(18rem, 948 * var(--frame-px)));
     /** Figma's 110 px from the top of the frame **/
     --padding-about: calc(110 * var(--frame-px));
+    /* About Content Column */
+    /** 1280 px, narrower than Figma's 1440 px column; never wider than its container **/
+    --width-about: min(100%, 1280 * var(--about-px));
+    /** Figma's 56 px below every About section **/
+    --padding-about-section: calc(56 * var(--about-px));
+    /* About Section Title */
+    /** Magra Bold 40 px; its band is Figma's 65 px title frame, followed by a 28 px gap **/
+    --text-about-title: calc(40 * var(--about-px));
+    --text-about-title--line-height: 1.45;
+    --text-about-title--letter-spacing: -0.005em;
+    --text-about-title--font-weight: 700;
+    --spacing-about-title-band: calc(3.5em / 40);
+    --spacing-about-title: calc(28em / 40);
+    /* Education Degree */
+    /** 38 px degree and timeline text; 36 px from the row to the paragraphs **/
+    --text-degree: calc(38 * var(--about-px));
+    --text-degree--line-height: 1.3;
+    --text-degree--letter-spacing: -0.005em;
+    --spacing-degree: calc(36em / 38);
+    --spacing-degree-offset: calc(10em / 38);
+    /** Figma's 12 px gap above the timeline pill **/
+    --spacing-timeline: calc(12em / 38);
+    /* Professional Experience */
+    /** Figma sets this text at 28 px; each em below is Figma's px over 28, so it scales with text-paragraph **/
+    /** 14 px between entries, and between each divider bar and its marker **/
+    --spacing-experience: calc(14em / 28);
+    /** 2 px above both text columns; 4 px under the heading and between bullets (Figma's are 22 px and 12 px) **/
+    --spacing-experience-inset: calc(2em / 28);
+    --spacing-experience-gap: calc(4em / 28);
+    /** Bullet text starts 20 px into the description column **/
+    --spacing-experience-bullet: calc(20em / 28);
+    /** Timeline pill: Figma's fixed 246 px as a floor, so every pill lines up **/
+    --min-width-experience-timeline: calc(246em / 28);
+    /** Divider: 10 px bar over a 25 px polygon marker **/
+    --width-experience-bar: calc(10em / 28);
+    --width-experience-marker: calc(25em / 28);
     /* Shadows */
     --drop-shadow-headshot: 0em 0em 0.4em color-mix(in srgb, var(--black) 55%, transparent);
+    /** Section titles, timeline pills, and Experience's divider bars and markers; em of 40 px. drop-shadow() has no spread, so the second layer's 3 px is dropped **/
+    --drop-shadow-elevation: 0em 0.025em 0.075em color-mix(in srgb, var(--black) 30%, transparent),
+                             0em 0.1em   0.2em   color-mix(in srgb, var(--black) 15%, transparent);
+    /** Loyola monogram's long shadow toward the bottom left; em of 38 px, Figma's fully transparent fifth layer dropped **/
+    --drop-shadow-loyola: 0em 0em 0.3em color-mix(in srgb, var(--black) 35%, transparent),
+                          0em 0em 0.1em color-mix(in srgb, var(--black) 20%, transparent);
 
     /* Banner Text */
     --text-banner: max(1.75rem, 68 * var(--frame-px));
@@ -138,9 +188,17 @@
     --text-banner--font-weight: 800;
     --drop-shadow-banner: -0.0735em 0.0588em 0.0103em color-mix(in srgb, var(--black) 25%, transparent);
     --inset-banner: calc(62em / 68);
-    /** Accent Clock : Adjustable clock cycle for banner accent gradient speed **/
-    --animate-banner-accent: banner-accent-flow calc(100 * 5s) linear infinite;
-    @keyframes banner-accent-flow {
+
+    /* Paragraph Text */
+    --text-paragraph: max(1rem, 24 * var(--frame-px));
+    --text-paragraph--line-height: 1.65;
+    --text-paragraph--letter-spacing: -0.005em;
+    --spacing-paragraph: calc(22em / 28);
+
+    /* Accent Text */
+    /** Accent Clock : Adjustable clock cycle for the accent gradient speed **/
+    --animate-accent: accent-flow calc(100 * 5s) linear infinite;
+    @keyframes accent-flow {
         to {
             --accent-spin: 100turn;
         }
@@ -202,37 +260,61 @@
     background-color: var(--tinted-gray);
 }
 
-/* Banner Text Accent Clock */
+/* About Layout Grid */
+/** 12 equal columns with 30 px gutters per 1440 px of width (Figma's are 36 px); in percent, so positions hold at every width **/
+@utility grid-about {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: calc(30 / 1440 * 100%);
+}
+
+/* Professional Experience Row */
+/** Heading and description keep Figma's 456 : 948 ratio around a 66 px divider (Figma's is 36 px) **/
+/** The divider is in em of 28 px, so its bar and marker always fit **/
+@utility grid-experience {
+    display: grid;
+    grid-template-columns: minmax(0, 456fr) calc(66em / 28) minmax(0, 948fr);
+}
+
+/* Accent Text Clock */
 @property --accent-spin {
     syntax: "<angle>";
     inherits: true;
     initial-value: 0turn;
 }
 
-/* Banner Text Accent Gradient */
+/* Accent Text Phase */
+/** Per-accent offset into the shared clock, set by AccentText; same speed, so the loop stays seamless **/
+@property --accent-phase {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0turn;
+}
+
+/* Accent Text Gradient */
 /** Flow: Each color is a blob on its own sine path over the base ramp **/
-/** var(--accent-spin) : Resolves to the animated value on this element **/
-@utility text-banner-gradient {
-    background-image: radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.55))
-                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.67)),
+/** --accent-t : Declared here, so it resolves the animated spin on this element, shifted by its own phase **/
+@utility text-accent-gradient {
+    --accent-t: calc(var(--accent-spin) + var(--accent-phase));
+    background-image: radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-t) * 0.55))
+                                                          calc(50% + 40% * sin(var(--accent-t) * 0.67)),
                                       var(--light-purple), transparent),
-                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.86 + 2.1rad))
-                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.92 + 1.3rad)),
+                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-t) * 0.86 + 2.1rad))
+                                                          calc(50% + 40% * sin(var(--accent-t) * 0.92 + 1.3rad)),
                                       var(--purple), transparent),
-                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.67 + 4.2rad))
-                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.76 + 2.6rad)),
+                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-t) * 0.67 + 4.2rad))
+                                                          calc(50% + 40% * sin(var(--accent-t) * 0.76 + 2.6rad)),
                                       var(--neon-pink), transparent),
-                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.98 + 6.3rad))
-                                                          calc(50% + 40% * sin(var(--accent-spin) * 1.02 + 3.9rad)),
+                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-t) * 0.98 + 6.3rad))
+                                                          calc(50% + 40% * sin(var(--accent-t) * 1.02 + 3.9rad)),
                                       var(--orange), transparent),
-                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-spin) * 0.79 + 8.4rad))
-                                                          calc(50% + 40% * sin(var(--accent-spin) * 0.86 + 5.2rad)),
+                      radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-t) * 0.79 + 8.4rad))
+                                                          calc(50% + 40% * sin(var(--accent-t) * 0.86 + 5.2rad)),
                                       var(--light-orange), transparent),
-                      var(--gradient-banner-accent);
+                      var(--gradient-accent);
     background-clip: text;
     color: transparent;
-    text-box: trim-start ex alphabetic;
     /** Padding grows the painted area past the glyphs; the equal negative margin keeps the layout size unchanged **/
-    padding: var(--banner-accent-bleed);
-    margin: calc(-1 * var(--banner-accent-bleed));
+    padding: var(--accent-bleed);
+    margin: calc(-1 * var(--accent-bleed));
 }

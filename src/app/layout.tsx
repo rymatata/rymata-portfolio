@@ -26,7 +26,11 @@ const redditSans = Reddit_Sans({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         // suppressHydrationWarning : introScript may add data-intro before React hydrates
-        <html lang="en" className={`${koulen.variable} ${magra.variable} ${redditSans.variable}`} suppressHydrationWarning>
+        <html
+            lang="en"
+            suppressHydrationWarning
+            className={`${koulen.variable} ${magra.variable} ${redditSans.variable}`}
+        >
             <head>
                 <script dangerouslySetInnerHTML={{ __html: introScript }} />
             </head>

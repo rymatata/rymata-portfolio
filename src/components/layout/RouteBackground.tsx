@@ -11,7 +11,10 @@ export function RouteBackground() {
 
     return (
         // Base layer: always visible, shown alone for the "default" gradient
-        <div aria-hidden className="fixed inset-0 -z-10 bg-default">
+        <div
+            aria-hidden
+            className="fixed inset-0 -z-10 bg-default"
+        >
             {/* "dark" gradient : "default" pre-darkened by 55% black as its own OKLAB gradient */}
             <div className={`${fadeLayer} bg-default-dark ${gradient === "dark" ? "opacity-100" : "opacity-0"}`} />
 
@@ -20,8 +23,16 @@ export function RouteBackground() {
 
             {/* Nets : One WebGL net per variant over the gradients, all drawing one shared spin and camera; each draws only while shown */}
             {/** Home <-> Projects/Resume crossfades the two nets in lockstep from where the last one was; Projects <-> Resume keeps the same net running **/}
-            <ParallaxNet variant="default" active={net === "default"} className={fadeLayer} />
-            <ParallaxNet variant="dark"    active={net === "dark"}    className={fadeLayer} />
+            <ParallaxNet
+                variant="default"
+                active={net === "default"}
+                className={fadeLayer}
+            />
+            <ParallaxNet
+                variant="dark"
+                active={net === "dark"}
+                className={fadeLayer}
+            />
         </div>
     );
 }
