@@ -1,5 +1,5 @@
-// Shared container for every About section: Figma's 56 px below it and an optional title
-// The title sits on the second column of Figma's layout grid; its padding rebuilds the 65 px title band
+// Shared container for every About section: 56 px below it and an optional title
+// The title starts on the second column of grid-about, indenting it past the content's edge; its padding builds the 65 px title band
 export function AboutSection({ title, className = "", children }: {
     title?: string; className?: string; children: React.ReactNode;
 }) {

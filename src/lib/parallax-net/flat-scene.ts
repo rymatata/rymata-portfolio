@@ -53,8 +53,8 @@ export function buildFlatScene(net: FlatNetConfig, random: () => number): FlatSc
     const jittered = (spot: number, limit: number) => Math.min(Math.max(spot + (random() * 2 - 1) * net.jitter, -limit), limit);
     const dots: FlatDot[] = [];
 
-    // Triangular lattice across the band, so neighbors meet in triangles as Figma's circles do
-    // Dots behind the photo stay; their lines pass under it like Figma's
+    // Triangular lattice across the band: odd columns shift half a row, so neighboring dots connect in triangles
+    // Dots behind the photo stay; their lines pass under it, so the net reads as one continuous band
     for (let i = 0; i < net.columns; i++) {
         const odd = i % 2;
 

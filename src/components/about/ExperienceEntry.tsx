@@ -1,6 +1,6 @@
 import type { Experience } from "@/lib/data/about";
 
-// Figma's polygon markers, from their SVG exports: a downward triangle under each bar, a diamond ending the timeline
+// Timeline markers as inline SVG paths, so fill-light-gray and drop-shadow-elevation style them: a downward triangle under each bar, a diamond ending the timeline
 const markers = {
     next: {
         viewBox: "0 0 25 13",
@@ -13,7 +13,7 @@ const markers = {
 } as const;
 
 // One Professional Experience row on grid-experience: heading and timeline pill, divider, then the highlights
-// Sizes come from the list's text-paragraph; every em token is Figma's px over its 28 px text, so the row scales with it
+// Sizes come from the list's text-paragraph; every em token is px over 28 px text, so the row scales with it
 export function ExperienceEntry({ experience, last }: { experience: Experience; last: boolean }) {
     const marker = markers[last ? "end" : "next"];
     return (
@@ -23,7 +23,7 @@ export function ExperienceEntry({ experience, last }: { experience: Experience; 
                     <span className="font-koulen">{experience.title}</span>
                     <span className="font-magra text-dark-gray">{experience.organization}</span>
                 </h3>
-                <p className="min-w-experience-timeline rounded-full bg-gray text-center font-magra drop-shadow-elevation">
+                <p className="min-w-experience-timeline rounded-full bg-dark-gray text-center px-[calc(30em/38)] font-magra drop-shadow-elevation">
                     {experience.timeline}
                 </p>
             </div>

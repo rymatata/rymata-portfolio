@@ -3,7 +3,7 @@ import { HeadshotNet } from "@/components/about/HeadshotNet";
 import { Tilt } from "@/components/ui/Tilt";
 import { headshot } from "@/lib/data/about";
 
-// Figma's About intro without its text: the photo over a band of connected dots, here a flat parallax net
+// About page's opening visual: the photo over a band of connected dots, drawn by a flat parallax net
 // The net stays inside it, so nothing around it clips the net
 //* Comprised of Client Components: HeadshotNet, Tilt
 export function Headshot() {

@@ -3,7 +3,7 @@ import { AboutSection } from "@/components/about/AboutSection";
 import { Paragraph } from "@/components/ui/Paragraph";
 import { education } from "@/lib/data/about";
 
-// Education section: the university row on Figma's layout grid, then the degree's story
+// Education section: the university row on grid-about, then the degree's story
 // Row: monogram on columns 4–5 at 90% of their width, its height from the SVG's own ratio; degree from column 6
 export function Education() {
     return (
@@ -14,7 +14,7 @@ export function Education() {
                     alt={education.logo.alt}
                     width={59}
                     height={75}
-                    className="col-span-2 col-start-4 h-auto w-9/10 drop-shadow-loyola"
+                    className="col-span-2 col-start-4 h-auto w-9/10 drop-shadow-logo"
                 />
 
                 {/* Runs to the last column, so the first line never wraps on small differences in font metrics */}
@@ -23,7 +23,7 @@ export function Education() {
                         <span className="font-koulen text-white">{education.degree}</span>
                         <span className="font-magra text-evergreen">{education.school}</span>
                     </h3>
-                    <p className="mt-timeline w-fit rounded-full bg-evergreen px-[calc(35em/38)] py-[calc(2em/38)] font-magra text-white drop-shadow-elevation">
+                    <p className="mt-timeline w-fit rounded-full bg-evergreen px-[calc(35em/38)] py-[calc(4em/38)] font-magra text-white drop-shadow-elevation">
                         {education.timeline}
                     </p>
                 </div>

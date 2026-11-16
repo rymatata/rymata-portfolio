@@ -59,7 +59,7 @@
 
     /* Frame Scaling */
     --frame-px: min(100vw / 1920, 100dvh / 1080);
-    /** About page's Figma px; floored at 1rem / 28 so the About column, section titles, and degree text stop shrinking together **/
+    /** About page's px unit: one frame px, floored at 1rem / 28 so 28 units never fall below 1rem; the About column, section titles, and degree text stop shrinking together **/
     /** Paragraph text floors on its own, at text-paragraph's 1rem **/
     --about-px: max(1rem / 28, var(--frame-px));
 
@@ -134,15 +134,15 @@
     /* About Headshot */
     /** The net's band, 948 × 225.5 px, behind a photo as tall as the band; floored for small screens, never wider than its container **/
     --width-headshot: min(100%, max(18rem, 948 * var(--frame-px)));
-    /** Figma's 110 px from the top of the frame **/
+    /** About page's top padding: 110 frame px above the headshot, so the gap scales with the viewport **/
     --padding-about: calc(110 * var(--frame-px));
     /* About Content Column */
-    /** 1280 px, narrower than Figma's 1440 px column; never wider than its container **/
+    /** 1280 px wide, keeping text lines at a readable length; never wider than its container **/
     --width-about: min(100%, 1280 * var(--about-px));
-    /** Figma's 56 px below every About section **/
+    /** 56 px below every About section, separating each section from the next title **/
     --padding-about-section: calc(56 * var(--about-px));
     /* About Section Title */
-    /** Magra Bold 40 px; its band is Figma's 65 px title frame, followed by a 28 px gap **/
+    /** Magra Bold 40 px; vertical padding grows its line into a 65 px title band, followed by a 28 px gap to the section's content **/
     --text-about-title: calc(40 * var(--about-px));
     --text-about-title--line-height: 1.45;
     --text-about-title--letter-spacing: -0.005em;
@@ -150,36 +150,52 @@
     --spacing-about-title-band: calc(3.5em / 40);
     --spacing-about-title: calc(28em / 40);
     /* Education Degree */
-    /** 38 px degree and timeline text; 36 px from the row to the paragraphs **/
-    --text-degree: calc(38 * var(--about-px));
+    /** 32 px degree and timeline text; the spacings below are em ratios over 38, so they scale with it (36/38 em from the row to the paragraphs) **/
+    --text-degree: calc(32 * var(--about-px));
     --text-degree--line-height: 1.3;
     --text-degree--letter-spacing: -0.005em;
     --spacing-degree: calc(36em / 38);
     --spacing-degree-offset: calc(10em / 38);
-    /** Figma's 12 px gap above the timeline pill **/
+    /** 12/38 em gap between the school name and its timeline pill **/
     --spacing-timeline: calc(12em / 38);
     /* Professional Experience */
-    /** Figma sets this text at 28 px; each em below is Figma's px over 28, so it scales with text-paragraph **/
+    /** Measured against 28 px text; each em below is px over 28, so spacing scales with text-paragraph **/
     /** 14 px between entries, and between each divider bar and its marker **/
     --spacing-experience: calc(14em / 28);
-    /** 2 px above both text columns; 4 px under the heading and between bullets (Figma's are 22 px and 12 px) **/
+    /** 2 px above both text columns, aligning their first lines; 4 px under the heading and between bullets, keeping each entry compact **/
     --spacing-experience-inset: calc(2em / 28);
     --spacing-experience-gap: calc(4em / 28);
     /** Bullet text starts 20 px into the description column **/
     --spacing-experience-bullet: calc(20em / 28);
-    /** Timeline pill: Figma's fixed 246 px as a floor, so every pill lines up **/
+    /** Timeline pill: 246 px minimum width, so pills with shorter dates still line up with the rest **/
     --min-width-experience-timeline: calc(246em / 28);
     /** Divider: 10 px bar over a 25 px polygon marker **/
     --width-experience-bar: calc(10em / 28);
     --width-experience-marker: calc(25em / 28);
+    /* Technical Skills */
+    /** Magra 32 px category headers; about-px floors at 1rem / 28, so they stay above text-paragraph at every width **/
+    --text-skill-category: calc(32 * var(--about-px));
+    --text-skill-category--line-height: 1.45;
+    --text-skill-category--letter-spacing: -0.005em;
+    /** From a header to its logo row, from the logos to the name pill, and then between categories **/
+    --spacing-skill-logos: calc(10 * var(--about-px));
+    --spacing-skill-name: calc(16 * var(--about-px));
+    --spacing-skill-category: calc(56 * var(--about-px));
+    /** Name pill: Koulen 50 px; at least 600 px of every 1440 px of column, in percent like grid-about, so it only grows when a long name needs the room **/
+    --text-skill-name: calc(50 * var(--about-px));
+    --text-skill-name--line-height: 1.45;
+    --text-skill-name--letter-spacing: -0.005em;
+    --min-width-skill-name: calc(600 / 1440 * 100%);
+    /** Soft black glow behind the pill's white text, lifting it off the dark-gray fill; 14/64 em, so the glow scales with text-skill-name **/
+    --text-shadow-skill-name: 0em 0em calc(14em / 64) var(--black);
     /* Shadows */
     --drop-shadow-headshot: 0em 0em 0.4em color-mix(in srgb, var(--black) 55%, transparent);
-    /** Section titles, timeline pills, and Experience's divider bars and markers; em of 40 px. drop-shadow() has no spread, so the second layer's 3 px is dropped **/
+    /** Section titles, timeline pills, skill name pills, and Experience's divider bars and markers; em of 40 px. drop-shadow() has no spread, so the second layer's 3 px is dropped **/
     --drop-shadow-elevation: 0em 0.025em 0.075em color-mix(in srgb, var(--black) 30%, transparent),
                              0em 0.1em   0.2em   color-mix(in srgb, var(--black) 15%, transparent);
-    /** Loyola monogram's long shadow toward the bottom left; em of 38 px, Figma's fully transparent fifth layer dropped **/
-    --drop-shadow-loyola: 0em 0em 0.3em color-mix(in srgb, var(--black) 35%, transparent),
-                          0em 0em 0.1em color-mix(in srgb, var(--black) 20%, transparent);
+    /** Soft glow behind the Education monogram and Technical Skills logos, lifting them off the gray background; in em of the surrounding text-degree, so it scales with the rows **/
+    --drop-shadow-logo: 0em 0em 0.3em color-mix(in srgb, var(--black) 35%, transparent),
+                        0em 0em 0.1em color-mix(in srgb, var(--black) 20%, transparent);
 
     /* Banner Text */
     --text-banner: max(1.75rem, 68 * var(--frame-px));
@@ -261,15 +277,15 @@
 }
 
 /* About Layout Grid */
-/** 12 equal columns with 30 px gutters per 1440 px of width (Figma's are 36 px); in percent, so positions hold at every width **/
+/** 12 equal columns with 20 px gutters per 1440 px of width; in percent, so section titles, the Education row, and the skill logo rows hold their columns at every width **/
 @utility grid-about {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: calc(30 / 1440 * 100%);
+    column-gap: calc(20 / 1440 * 100%);
 }
 
 /* Professional Experience Row */
-/** Heading and description keep Figma's 456 : 948 ratio around a 66 px divider (Figma's is 36 px) **/
+/** Heading and description share the width at 456 : 948, giving the highlights the wider column, around a 66 px divider **/
 /** The divider is in em of 28 px, so its bar and marker always fit **/
 @utility grid-experience {
     display: grid;

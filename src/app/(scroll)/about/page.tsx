@@ -1,6 +1,7 @@
 import { AboutIntro } from "@/components/about/AboutIntro";
 import { Education } from "@/components/about/Education";
 import { Experience } from "@/components/about/Experience";
+import { TechnicalSkills } from "@/components/about/TechnicalSkills";
 
 // Table of contents: each section is its own component, stacked in the centered About column (w-about)
 export default function AboutPage() {
@@ -11,6 +12,7 @@ export default function AboutPage() {
                 <AboutIntro />
                 <Education />
                 <Experience />
+                <TechnicalSkills />
             </div>
         </main>
     );
