@@ -101,10 +101,10 @@ export const skillCategories: readonly SkillCategory[] = [
         skills: [
             { name: "NumPy", logo: { src: "/logos/frameworks-libs/numpy-logo.svg", width: 32, height: 32 } },
             { name: "pandas", logo: { src: "/logos/frameworks-libs/pandas-logo.svg", width: 210, height: 280 } },
-            { name: "Vue", logo: { src: "/logos/frameworks-libs/vue-logo.svg", width: 32, height: 32 } },
-            { name: "Tailwind CSS", logo: { src: "/logos/frameworks-libs/tailwind-logo.svg", width: 32, height: 32 } },
             { name: "React", logo: { src: "/logos/frameworks-libs/react-logo.svg", width: 32, height: 32 } },
             { name: "Vite", logo: { src: "/logos/frameworks-libs/vite-logo.svg", width: 32, height: 32 } },
+            { name: "Vue", logo: { src: "/logos/frameworks-libs/vue-logo.svg", width: 32, height: 32 } },
+            { name: "Tailwind CSS", logo: { src: "/logos/frameworks-libs/tailwind-logo.svg", width: 32, height: 32 } },
         ],
     },
     {

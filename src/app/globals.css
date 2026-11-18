@@ -22,7 +22,6 @@
     --light-orange: #ffd86c;
     /* Loyola Gradient Colors */
     --evergreen: #113430;
-    --light-evergreen: #92BDB8;
 
     /* Tokens */
     /* Default Background Gradient */
@@ -56,6 +55,26 @@
                               var(--light-orange));
     /** Text only paints inside the box; this covers italic overhang and glyphs above the trimmed top **/
     --accent-bleed: 0.3em;
+    /* Spotlight */
+    /** Pointer light and border glow on the About pills and Experience divider bars and markers; Spotlight's --spotlight-near runs from 0, with the pointer far away or out of the window, to 1 on a host's center **/
+    /** Fill : the light's opacity at near 0 and at near 1, and its radius in em of the host's own text, so each host's light scales with it **/
+    --spotlight-min: 0;
+    --spotlight-max: 0.3;
+    --spotlight-radius: 8em;
+    /** Border Glow : the same light on a ring around the host's edge; smaller, so it lights only the stretch of edge nearest the pointer **/
+    --border-glow-min: 0.1;
+    --border-glow-max: 0.7;
+    --border-glow-radius: calc(var(--spotlight-radius) * 0.75);
+    --border-glow-width: 0.05em;
+    /** Falloff shared by both lights; eased stops fade white to transparent without a visible edge, each a pure alpha change **/
+    --spotlight-falloff: var(--white) 0%,
+                         color-mix(in srgb, var(--white) 97.3%, transparent) 15%,
+                         color-mix(in srgb, var(--white) 83.7%, transparent) 30%,
+                         color-mix(in srgb, var(--white) 59.3%, transparent) 45%,
+                         color-mix(in srgb, var(--white) 31.7%, transparent) 60%,
+                         color-mix(in srgb, var(--white) 10.4%, transparent) 75%,
+                         color-mix(in srgb, var(--white) 0.9%,  transparent) 90%,
+                         transparent 100%;
 
     /* Frame Scaling */
     --frame-px: min(100vw / 1920, 100dvh / 1080);
@@ -173,7 +192,7 @@
     --width-experience-bar: calc(10em / 28);
     --width-experience-marker: calc(25em / 28);
     /* Technical Skills */
-    /** Magra 32 px category headers; about-px floors at 1rem / 28, so they stay above text-paragraph at every width **/
+    /** Koulen 32 px category headers; about-px floors at 1rem / 28, so they stay above text-paragraph at every width **/
     --text-skill-category: calc(32 * var(--about-px));
     --text-skill-category--line-height: 1.45;
     --text-skill-category--letter-spacing: -0.005em;
@@ -181,11 +200,11 @@
     --spacing-skill-logos: calc(10 * var(--about-px));
     --spacing-skill-name: calc(16 * var(--about-px));
     --spacing-skill-category: calc(56 * var(--about-px));
-    /** Name pill: Koulen 50 px; at least 600 px of every 1440 px of column, in percent like grid-about, so it only grows when a long name needs the room **/
-    --text-skill-name: calc(50 * var(--about-px));
+    /** Name pill: Koulen 44 px; at least 520 px of every 1440 px of column, in percent like grid-about, so it only grows when a long name needs the room **/
+    --text-skill-name: calc(44 * var(--about-px));
     --text-skill-name--line-height: 1.45;
     --text-skill-name--letter-spacing: -0.005em;
-    --min-width-skill-name: calc(600 / 1440 * 100%);
+    --min-width-skill-name: calc(520 / 1440 * 100%);
     /** Soft black glow behind the pill's white text, lifting it off the dark-gray fill; 14/64 em, so the glow scales with text-skill-name **/
     --text-shadow-skill-name: 0em 0em calc(14em / 64) var(--black);
     /* Shadows */
@@ -274,6 +293,81 @@
     background-size: 18.75% 100%;
     background-repeat: no-repeat;
     background-color: var(--tinted-gray);
+}
+
+/* Spotlight Strength */
+/** Written by Spotlight; registered as a number, so a sudden change, like the pointer leaving the window, eases over spotlight's transition instead of jumping **/
+@property --spotlight-near {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+/* Spotlight */
+/** A soft fill and a glow on the host's edge, both centered on --spotlight-x and --spotlight-y, which Spotlight writes onto the element in px **/
+/** Each light's image is declared here, not as a :root token, so those var()s resolve on the element where the position is written; its layers inherit them already aimed, and until then both lights sit on the center **/
+/** OKLAB, as each light's last stop is transparent; each light's opacity runs from its min to its max with --spotlight-near **/
+@utility spotlight {
+    transition: --spotlight-near 300ms ease-out;
+    --spotlight-fill: radial-gradient(circle var(--spotlight-radius) at var(--spotlight-x, 50%) var(--spotlight-y, 50%) in oklab,
+                                      var(--spotlight-falloff));
+    --spotlight-glow: radial-gradient(circle var(--border-glow-radius) at var(--spotlight-x, 50%) var(--spotlight-y, 50%) in oklab,
+                                      var(--spotlight-falloff));
+
+    /** Box hosts : an empty light paints both lights on its own ::before and ::after, rounded by the host's border-radius **/
+    &:empty::before,
+    &:empty::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+    }
+
+    &:empty::before {
+        background-image: var(--spotlight-fill);
+    }
+
+    /** Padding sets the ring's width; excluding the content-box layer from the full layer masks out the middle, leaving only the ring **/
+    &:empty::after {
+        padding: var(--border-glow-width);
+        background-image: var(--spotlight-glow);
+        mask: linear-gradient(in oklab, var(--black) 0 0) content-box exclude,
+              linear-gradient(in oklab, var(--black) 0 0);
+    }
+
+    /** Shaped hosts : Spotlight's two svg copies of the host's outline, painted white and masked by each light, so the alpha falloff matches the box lights **/
+    & > svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    & > svg:first-child {
+        fill: var(--white);
+        mask-image: var(--spotlight-fill);
+    }
+
+    /** The stroke is twice the ring's width and centered on the outline; its clipPath keeps only the inner half **/
+    /** Non-scaling, so the width stays in screen px as the viewBox scales the shape, matching the box hosts' ring **/
+    & > svg:last-child {
+        fill: none;
+        stroke: var(--white);
+        stroke-width: calc(2 * var(--border-glow-width));
+        vector-effect: non-scaling-stroke;
+        mask-image: var(--spotlight-glow);
+    }
+
+    /** One strength ramp per light, shared by both host kinds **/
+    &:empty::before,
+    & > svg:first-child {
+        opacity: calc(var(--spotlight-min) + (var(--spotlight-max) - var(--spotlight-min)) * var(--spotlight-near));
+    }
+
+    &:empty::after,
+    & > svg:last-child {
+        opacity: calc(var(--border-glow-min) + (var(--border-glow-max) - var(--border-glow-min)) * var(--spotlight-near));
+    }
 }
 
 /* About Layout Grid */

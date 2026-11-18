@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { AboutSection } from "@/components/about/AboutSection";
 import { Paragraph } from "@/components/ui/Paragraph";
+import { Spotlight } from "@/components/ui/Spotlight";
 import { education } from "@/lib/data/about";
 
 // Education section: the university row on grid-about, then the degree's story
@@ -23,7 +24,8 @@ export function Education() {
                         <span className="font-koulen text-white">{education.degree}</span>
                         <span className="font-magra text-evergreen">{education.school}</span>
                     </h3>
-                    <p className="mt-timeline w-fit rounded-full bg-evergreen px-[calc(35em/38)] py-[calc(4em/38)] font-magra text-white drop-shadow-elevation">
+                    <p className="relative isolate mt-timeline w-fit rounded-full bg-evergreen px-[calc(35em/38)] py-[calc(4em/38)] font-magra text-white drop-shadow-elevation">
+                        <Spotlight />
                         {education.timeline}
                     </p>
                 </div>

@@ -1,6 +1,8 @@
+import { Spotlight } from "@/components/ui/Spotlight";
 import type { Experience } from "@/lib/data/about";
 
-// Timeline markers as inline SVG paths, so fill-light-gray and drop-shadow-elevation style them: a downward triangle under each bar, a diamond ending the timeline
+// Timeline markers as inline SVG paths, so fill-light-gray and drop-shadow-elevation style them and Spotlight can light a copy of the same outline
+// A downward triangle under each bar, a diamond ending the timeline
 const markers = {
     next: {
         viewBox: "0 0 25 13",
@@ -23,7 +25,8 @@ export function ExperienceEntry({ experience, last }: { experience: Experience; 
                     <span className="font-koulen">{experience.title}</span>
                     <span className="font-magra text-dark-gray">{experience.organization}</span>
                 </h3>
-                <p className="min-w-experience-timeline rounded-full bg-dark-gray text-center px-[calc(30em/38)] font-magra drop-shadow-elevation">
+                <p className="relative isolate min-w-experience-timeline rounded-full bg-dark-gray text-center px-[calc(30em/38)] font-magra drop-shadow-elevation">
+                    <Spotlight />
                     {experience.timeline}
                 </p>
             </div>
@@ -31,8 +34,10 @@ export function ExperienceEntry({ experience, last }: { experience: Experience; 
             {/* Bar stretches down row 1 to the description's bottom; its marker hangs below it in row 2 */}
             <div
                 aria-hidden
-                className="w-experience-bar justify-self-center rounded-full bg-dark-gray drop-shadow-elevation"
-            />
+                className="relative isolate w-experience-bar justify-self-center rounded-full bg-dark-gray drop-shadow-elevation"
+            >
+                <Spotlight />
+            </div>
 
             <ul className="flex list-disc flex-col gap-experience-gap pt-experience-inset pl-experience-bullet font-reddit-sans italic">
                 {experience.highlights.map((highlight) => (
@@ -40,13 +45,19 @@ export function ExperienceEntry({ experience, last }: { experience: Experience; 
                 ))}
             </ul>
 
-            <svg
+            {/* Marker wrapped as the spotlight's host, since an svg can't hold its light; block drops the inline baseline gap, so the wrapper is exactly the marker's height */}
+            <div
                 aria-hidden
-                viewBox={marker.viewBox}
-                className="col-start-2 row-start-2 mt-experience w-experience-marker justify-self-center fill-light-gray drop-shadow-elevation"
+                className="relative isolate col-start-2 row-start-2 mt-experience w-experience-marker justify-self-center drop-shadow-elevation"
             >
-                <path d={marker.path} />
-            </svg>
+                <svg
+                    viewBox={marker.viewBox}
+                    className="block w-full fill-light-gray"
+                >
+                    <path d={marker.path} />
+                </svg>
+                <Spotlight shape={marker} />
+            </div>
         </li>
     );
 }
