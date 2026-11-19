@@ -3,7 +3,7 @@ import { useEffect, useId, useRef } from "react";
 
 // Distance from a host's center, in host lengths (its longer side), where its lights are halfway between their min and max strength
 // The longer side, so a tall divider bar fades along its length the way a wide pill fades along its width
-const FALLOFF = 0.275;
+const FALLOFF = 0.25;
 
 // Outline of a host that isn't a box, in its own SVG coordinates; the lights paint copies of it instead of the host's border-radius box
 type Shape = { viewBox: string; path: string };

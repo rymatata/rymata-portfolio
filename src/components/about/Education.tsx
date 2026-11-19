@@ -24,7 +24,7 @@ export function Education() {
                         <span className="font-koulen text-white">{education.degree}</span>
                         <span className="font-magra text-evergreen">{education.school}</span>
                     </h3>
-                    <p className="relative isolate mt-timeline w-fit rounded-full bg-evergreen px-[calc(35em/38)] py-[calc(4em/38)] font-magra text-white drop-shadow-elevation">
+                    <p className="relative isolate mt-timeline w-fit rounded-full bg-evergreen px-[calc(35em/38)] py-[calc(4em/38)] font-magra text-white drop-shadow-elevation text-shadow-timeline">
                         <Spotlight />
                         {education.timeline}
                     </p>

@@ -1,3 +1,4 @@
+import { accentPhase } from "@/components/ui/AccentText";
 import { Spotlight } from "@/components/ui/Spotlight";
 import type { Experience } from "@/lib/data/about";
 
@@ -18,6 +19,8 @@ const markers = {
 // Sizes come from the list's text-paragraph; every em token is px over 28 px text, so the row scales with it
 export function ExperienceEntry({ experience, last }: { experience: Experience; last: boolean }) {
     const marker = markers[last ? "end" : "next"];
+    // An ongoing role's pill fills with the flowing accent, so a future current job gets it from its data alone
+    const current = experience.timeline.endsWith("Present");
     return (
         <li className="grid-experience">
             <div className="flex flex-col items-end gap-experience-gap pt-experience-inset text-right">
@@ -25,7 +28,13 @@ export function ExperienceEntry({ experience, last }: { experience: Experience; 
                     <span className="font-koulen">{experience.title}</span>
                     <span className="font-magra text-dark-gray">{experience.organization}</span>
                 </h3>
-                <p className="relative isolate min-w-experience-timeline rounded-full bg-dark-gray text-center px-[calc(30em/38)] font-magra drop-shadow-elevation">
+                {/* The accent pill runs its own clock, as no AccentStack wraps it; every pill's Spotlight -z-1 light paints between its fill and its shadowed white text */}
+                <p
+                    style={current ? accentPhase(experience.timeline) : undefined}
+                    className={`relative isolate min-w-experience-timeline rounded-full text-center px-[calc(30em/38)] font-magra text-white drop-shadow-elevation text-shadow-timeline ${
+                        current ? "bg-accent-gradient animate-accent motion-reduce:animate-none" : "bg-dark-gray"
+                    }`}
+                >
                     <Spotlight />
                     {experience.timeline}
                 </p>

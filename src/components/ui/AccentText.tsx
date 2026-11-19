@@ -7,6 +7,11 @@ function hash(text: string) {
     return h >>> 0;
 }
 
+// Offset into the shared accent clock, hashed from the text, so each bg-accent-gradient flows uniquely yet the same on server and client
+export function accentPhase(text: string): React.CSSProperties {
+    return { "--accent-phase": `${(hash(text) % 10000) / 100}turn` } as React.CSSProperties;
+}
+
 // Different glow-styles based on the accent text type
 const glows = {
     banner:    "text-transparent opacity-35  blur-[0.1em]  saturate-140",
@@ -18,11 +23,10 @@ export type AccentGlow = keyof typeof glows;
 // Phase comes from the text, so each accent flows uniquely and both stack layers still match
 //* Glows only inside an AccentStack
 export function AccentText({ children }: { children: React.ReactNode }) {
-    const phase = typeof children === "string" ? (hash(children) % 10000) / 100 : 0;
     return (
         <span
-            style={{ "--accent-phase": `${phase}turn` } as React.CSSProperties}
-            className="text-accent-gradient"
+            style={typeof children === "string" ? accentPhase(children) : undefined}
+            className="bg-accent-gradient text-accent-gradient"
         >
             {children}
         </span>

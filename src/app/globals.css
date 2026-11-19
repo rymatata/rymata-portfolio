@@ -45,8 +45,8 @@
                            color-mix(in oklab, var(--about-edge), var(--tinted-gray) 74.07%) 66.667%,
                            color-mix(in oklab, var(--about-edge), var(--tinted-gray) 92.59%) 83.333%,
                            var(--tinted-gray) 100%;
-    /* Accent Text Gradient */
-    /** Base ramp under the drifting color blobs of text-accent-gradient **/
+    /* Accent Gradient */
+    /** Base ramp under the drifting color blobs of bg-accent-gradient **/
     --gradient-accent: linear-gradient(90deg in oklab,
                               var(--light-purple),
                               var(--purple),
@@ -208,6 +208,8 @@
     /** Soft black glow behind the pill's white text, lifting it off the dark-gray fill; 14/64 em, so the glow scales with text-skill-name **/
     --text-shadow-skill-name: 0em 0em calc(14em / 64) var(--black);
     /* Shadows */
+    /** Downward shadow under the white text of every Experience and Education timeline pill, lifting it off the dark-gray and evergreen fills and keeping it legible over the current pill's bright accent; in em of the pill's text, so it scales with text-paragraph and text-degree alike **/
+    --text-shadow-timeline: 0em 0.05em 0.15em var(--black);
     --drop-shadow-headshot: 0em 0em 0.4em color-mix(in srgb, var(--black) 55%, transparent);
     /** Section titles, timeline pills, skill name pills, and Experience's divider bars and markers; em of 40 px. drop-shadow() has no spread, so the second layer's 3 px is dropped **/
     --drop-shadow-elevation: 0em 0.025em 0.075em color-mix(in srgb, var(--black) 30%, transparent),
@@ -230,8 +232,8 @@
     --text-paragraph--letter-spacing: -0.005em;
     --spacing-paragraph: calc(22em / 28);
 
-    /* Accent Text */
-    /** Accent Clock : Adjustable clock cycle for the accent gradient speed **/
+    /* Accent Gradient */
+    /** Accent Clock : Adjustable clock cycle for the accent gradient speed; run by each AccentStack and by the current Experience timeline pill **/
     --animate-accent: accent-flow calc(100 * 5s) linear infinite;
     @keyframes accent-flow {
         to {
@@ -386,25 +388,26 @@
     grid-template-columns: minmax(0, 456fr) calc(66em / 28) minmax(0, 948fr);
 }
 
-/* Accent Text Clock */
+/* Accent Gradient Clock */
 @property --accent-spin {
     syntax: "<angle>";
     inherits: true;
     initial-value: 0turn;
 }
 
-/* Accent Text Phase */
-/** Per-accent offset into the shared clock, set by AccentText; same speed, so the loop stays seamless **/
+/* Accent Gradient Phase */
+/** Per-accent offset into the shared clock, set by accentPhase on each AccentText and the current Experience timeline pill; same speed, so the loop stays seamless **/
 @property --accent-phase {
     syntax: "<angle>";
     inherits: false;
     initial-value: 0turn;
 }
 
-/* Accent Text Gradient */
-/** Flow: Each color is a blob on its own sine path over the base ramp **/
+/* Accent Gradient */
+/** Paints the flowing accent on any box: AccentText clips it to its glyphs, the current Experience timeline pill fills with it **/
+/** Flow: Each color is a blob on its own sine path over the base ramp; the blobs size to the element, so a pill and a word flow alike **/
 /** --accent-t : Declared here, so it resolves the animated spin on this element, shifted by its own phase **/
-@utility text-accent-gradient {
+@utility bg-accent-gradient {
     --accent-t: calc(var(--accent-spin) + var(--accent-phase));
     background-image: radial-gradient(ellipse 58% 150% at calc(50% + 44% * sin(var(--accent-t) * 0.55))
                                                           calc(50% + 40% * sin(var(--accent-t) * 0.67)),
@@ -422,6 +425,11 @@
                                                           calc(50% + 40% * sin(var(--accent-t) * 0.86 + 5.2rad)),
                                       var(--light-orange), transparent),
                       var(--gradient-accent);
+}
+
+/* Accent Text Gradient */
+/** Clips bg-accent-gradient to the glyphs, so the accent shows only through the text **/
+@utility text-accent-gradient {
     background-clip: text;
     color: transparent;
     /** Padding grows the painted area past the glyphs; the equal negative margin keeps the layout size unchanged **/

@@ -18,6 +18,7 @@ export const education = {
 } as const;
 
 // One row of the About Professional Experience timeline; "\n" in title or organization forces a line break (ExperienceEntry renders with whitespace-pre-line)
+// A timeline ending in "Present" marks an ongoing role, whose pill ExperienceEntry fills with the flowing accent
 export type Experience = {
     title: string;
     organization: string;
