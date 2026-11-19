@@ -3,7 +3,7 @@ import { SkillCategoryEntry } from "@/components/about/SkillCategoryEntry";
 import { skillCategories } from "@/lib/data/about";
 
 // Technical Skills section: one SkillCategoryEntry per item in skillCategories, so a new category or logo is only new data
-// Stays a Server Component; only each category's hover pill runs on the client
+// Stays a Server Component; only each SkillCategoryEntry, with its lit logo row and name pill, runs on the client
 export function TechnicalSkills() {
     return (
         <AboutSection title="Technical Skills">

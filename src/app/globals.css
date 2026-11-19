@@ -95,6 +95,16 @@
     --intro-banner-distance: calc(100% + 1.5em);
     /** Pause after both slides end before the parallax net fades in **/
     --intro-net-delay: 0ms;
+
+    /* Split Text Flip */
+    /** Each SplitText letter swings up from lying flat, hinged on its baseline, as it fades in; the Technical Skills name pill plays it whenever its skill changes **/
+    /** Stagger : delay per letter of distance from the text's center, so the flip ripples outward from the middle **/
+    /** Ease : expo out, a fast swing that settles slowly into place **/
+    /** Perspective : viewing distance; unregistered, so its em resolves on each letter, keeping the depth the same at any text size **/
+    --split-flip-duration:    1500ms;
+    --split-flip-stagger:     25ms;
+    --split-flip-ease:        cubic-bezier(0.16, 1, 0.3, 1);
+    --split-flip-perspective: 30em;
 }
 
 /* Read back by IntroGate; registered, so it always computes to seconds */
@@ -153,7 +163,7 @@
     /* About Headshot */
     /** The net's band, 948 × 225.5 px, behind a photo as tall as the band; floored for small screens, never wider than its container **/
     --width-headshot: min(100%, max(18rem, 948 * var(--frame-px)));
-    /** About page's top padding: 110 frame px above the headshot, so the gap scales with the viewport **/
+    /** About page's vertical padding: 110 frame px above the headshot and below the last section, so both gaps scale with the viewport **/
     --padding-about: calc(110 * var(--frame-px));
     /* About Content Column */
     /** 1280 px wide, keeping text lines at a readable length; never wider than its container **/
@@ -207,6 +217,9 @@
     --min-width-skill-name: calc(520 / 1440 * 100%);
     /** Soft black glow behind the pill's white text, lifting it off the dark-gray fill; 14/64 em, so the glow scales with text-skill-name **/
     --text-shadow-skill-name: 0em 0em calc(14em / 64) var(--black);
+    /** Logos : dimmed, except the last one pointed at, which stays lit so the logo the name pill names stands out from its row; lighting grows it with scale, a transform that never reflows the grid, so its neighbors hold still **/
+    --opacity-skill-logo: 80%;
+    --scale-skill-logo: 106%;
     /* Shadows */
     /** Downward shadow under the white text of every Experience and Education timeline pill, lifting it off the dark-gray and evergreen fills and keeping it legible over the current pill's bright accent; in em of the pill's text, so it scales with text-paragraph and text-degree alike **/
     --text-shadow-timeline: 0em 0.05em 0.15em var(--black);
@@ -214,9 +227,12 @@
     /** Section titles, timeline pills, skill name pills, and Experience's divider bars and markers; em of 40 px. drop-shadow() has no spread, so the second layer's 3 px is dropped **/
     --drop-shadow-elevation: 0em 0.025em 0.075em color-mix(in srgb, var(--black) 30%, transparent),
                              0em 0.1em   0.2em   color-mix(in srgb, var(--black) 15%, transparent);
-    /** Soft glow behind the Education monogram and Technical Skills logos, lifting them off the gray background; in em of the surrounding text-degree, so it scales with the rows **/
+    /** Soft glow behind the Education monogram and the dimmed Technical Skills logos, lifting them off the gray background; in em of the surrounding text-degree, so it scales with the rows **/
     --drop-shadow-logo: 0em 0em 0.3em color-mix(in srgb, var(--black) 35%, transparent),
                         0em 0em 0.1em color-mix(in srgb, var(--black) 20%, transparent);
+    /** Lit Technical Skills logo : drop-shadow-logo's two layers in white, a touch stronger, so the shadow reads as a glow; the matching layer count lets the filter transition ease each layer from black to white instead of jumping **/
+    --drop-shadow-logo-glow: 0em 0em 0.3em color-mix(in srgb, var(--white) 35%, transparent),
+                             0em 0em 0.1em color-mix(in srgb, var(--white) 30%, transparent);
 
     /* Banner Text */
     --text-banner: max(1.75rem, 68 * var(--frame-px));
@@ -261,6 +277,22 @@
     @keyframes intro-banner-in-right {
         from {
             transform: translateX(var(--intro-banner-distance));
+        }
+    }
+
+    /* Split Text Flip */
+    /** Knobs live in :root; inline, so var(--split-step) resolves on each letter, where SplitText sets it, instead of on :root, where it doesn't exist **/
+    /** backwards holds each letter flat and hidden through its stagger delay, then drops the transform once done, leaving resting text untransformed **/
+    /** The end frame keeps the same perspective, so only the angle eases; ending on none would ease the perspective too **/
+    --animate-split-flip: split-flip var(--split-flip-duration) var(--split-flip-ease)
+                          calc(var(--split-step, 0) * var(--split-flip-stagger)) backwards;
+    @keyframes split-flip {
+        from {
+            opacity: 0;
+            transform: perspective(var(--split-flip-perspective)) rotateX(-90deg);
+        }
+        to {
+            transform: perspective(var(--split-flip-perspective)) rotateX(0deg);
         }
     }
 }
