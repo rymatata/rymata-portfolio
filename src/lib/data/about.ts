@@ -1,4 +1,15 @@
 import { navHead } from "@/lib/data/nav";
+import type { ScrollNetSection } from "@/lib/scroll-net";
+
+// About sections in page order, one ScrollNet point each; id anchors a section and its point, label names the point (and the untitled intro) for screen readers
+export const aboutSections = [
+    { id: "introduction", label: "Introduction" },
+    { id: "education",    label: "Education" },
+    { id: "experience",   label: "Professional Experience" },
+    { id: "skills",       label: "Technical Skills" },
+] as const satisfies readonly ScrollNetSection[];
+
+export type AboutSectionId = (typeof aboutSections)[number]["id"];
 
 // Photo at the top of the About page, over its flat parallax net
 export const headshot = {

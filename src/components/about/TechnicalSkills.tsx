@@ -6,7 +6,10 @@ import { skillCategories } from "@/lib/data/about";
 // Stays a Server Component; only each SkillCategoryEntry, with its lit logo row and name pill, runs on the client
 export function TechnicalSkills() {
     return (
-        <AboutSection title="Technical Skills">
+        <AboutSection
+            id="skills"
+            title="Technical Skills"
+        >
             <div className="flex flex-col gap-skill-category">
                 {skillCategories.map((category) => (
                     <SkillCategoryEntry

@@ -82,6 +82,12 @@
     /** Paragraph text floors on its own, at text-paragraph's 1rem **/
     --about-px: max(1rem / 28, var(--frame-px));
 
+    /* About Page */
+    /** Headshot Band : the headshot net's 948 px band width before its container caps it, floored for small screens; ScrollNet takes its height from the same band, so both nets stay one height **/
+    --headshot-band: max(18rem, 948 * var(--frame-px));
+    /** Page Padding : 110 frame px above the headshot and below the last section; a jump to an About section through its ScrollNet point stops the same distance below the window's top **/
+    --about-padding: calc(110 * var(--frame-px));
+
     /* Load-in Intro */
     /** Side nav, from the right; distance resolves on the nav, % is its width and em its font size **/
     --intro-nav-duration: 1000ms;
@@ -105,6 +111,17 @@
     --split-flip-stagger:     25ms;
     --split-flip-ease:        cubic-bezier(0.16, 1, 0.3, 1);
     --split-flip-perspective: 30em;
+
+    /* Scroll Reveal */
+    /** Every ScrollSection after the first starts hidden and fades in once its top rises to the trigger line; its ScrollNet point lights on the same transition (scroll-reveal), so both land together **/
+    /** Line : how far down the window, from its top, a section's top must rise before it reveals and its point lights **/
+    /** Duration, Delay, Ease : the one transition every section and point shares **/
+    /** Distance : how far below its place a hidden section waits, rising into place as it fades; 0 keeps the reveal a pure fade **/
+    --scroll-reveal-line:     80%;
+    --scroll-reveal-duration: 2000ms;
+    --scroll-reveal-delay:    0ms;
+    --scroll-reveal-ease:     cubic-bezier(0.33, 1, 0.68, 1);
+    --scroll-reveal-distance: 2em;
 }
 
 /* Read back by IntroGate; registered, so it always computes to seconds */
@@ -112,6 +129,13 @@
     syntax: "<time>";
     inherits: true;
     initial-value: 0s;
+}
+
+/* Read back by useScrollSpy; registered, so it always computes to a percentage, and a value that isn't one falls back to 80% */
+@property --scroll-reveal-line {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 80%;
 }
 
 @theme inline {
@@ -160,16 +184,31 @@
     /** About : The flat net behind the headshot, over the tinted-gray About background **/
     --color-parallax-net-about: color-mix(in srgb, var(--white) 55%, transparent);
 
+    /* Scroll Net */
+    /** The column of section points, as tall as the headshot net's 948 × 225.5 px band, so its dots, lines, and loops draw at that net's scale **/
+    --height-scroll-net: calc(var(--headshot-band) * 225.5 / 948);
+    /** 80 frame px from the window's left edge, floored for small screens **/
+    --inset-scroll-net: max(1rem, 80 * var(--frame-px));
+    /** Lines and dots in full white, brighter than the headshot net's 55%, so the column reads as a control rather than background; kept as a pure alpha change, like the parallax nets, so its strength tunes the same way **/
+    --color-scroll-net: color-mix(in srgb, var(--white) 100%, transparent);
+    /** Every point but the current section's rests dimmed to this; the current one is fully opaque **/
+    --opacity-scroll-point: 20%;
+    /** Soft white glow around the whole column, lines and points together, lifting the net off the tinted-gray background; sized off the column's height, so it scales with the net. The filter runs on the composited svg, so a dimmed point glows only as faintly as it shows **/
+    --drop-shadow-scroll-net: 0 0 calc(var(--height-scroll-net) * 0.015) color-mix(in srgb, var(--white) 60%, transparent),
+                              0 0 calc(var(--height-scroll-net) * 0.05)  color-mix(in srgb, var(--white) 30%, transparent);
+
     /* About Headshot */
-    /** The net's band, 948 × 225.5 px, behind a photo as tall as the band; floored for small screens, never wider than its container **/
-    --width-headshot: min(100%, max(18rem, 948 * var(--frame-px)));
+    /** The net's band, 948 × 225.5 px, behind a photo as tall as the band; floored for small screens (headshot-band), never wider than its container **/
+    --width-headshot: min(100%, var(--headshot-band));
     /** About page's vertical padding: 110 frame px above the headshot and below the last section, so both gaps scale with the viewport **/
-    --padding-about: calc(110 * var(--frame-px));
+    --padding-about: var(--about-padding);
+    /** The same gap above an About section once a ScrollNet point jumps to it, so the intro lands at the very top and every title lands as far below the window's top **/
+    --scroll-margin-about: var(--about-padding);
     /* About Content Column */
     /** 1280 px wide, keeping text lines at a readable length; never wider than its container **/
     --width-about: min(100%, 1280 * var(--about-px));
-    /** 56 px below every About section, separating each section from the next title **/
-    --padding-about-section: calc(56 * var(--about-px));
+    /** 100 px below every About section, separating each section from the next title **/
+    --padding-about-section: calc(100 * var(--about-px));
     /* About Section Title */
     /** Magra Bold 40 px; vertical padding grows its line into a 65 px title band, followed by a 28 px gap to the section's content **/
     --text-about-title: calc(40 * var(--about-px));
@@ -209,7 +248,7 @@
     /** From a header to its logo row, from the logos to the name pill, and then between categories **/
     --spacing-skill-logos: calc(10 * var(--about-px));
     --spacing-skill-name: calc(16 * var(--about-px));
-    --spacing-skill-category: calc(56 * var(--about-px));
+    --spacing-skill-category: calc(90 * var(--about-px));
     /** Name pill: Koulen 44 px; at least 520 px of every 1440 px of column, in percent like grid-about, so it only grows when a long name needs the room **/
     --text-skill-name: calc(44 * var(--about-px));
     --text-skill-name--line-height: 1.45;
@@ -224,8 +263,8 @@
     /** Downward shadow under the white text of every Experience and Education timeline pill, lifting it off the dark-gray and evergreen fills and keeping it legible over the current pill's bright accent; in em of the pill's text, so it scales with text-paragraph and text-degree alike **/
     --text-shadow-timeline: 0em 0.05em 0.15em var(--black);
     --drop-shadow-headshot: 0em 0em 0.4em color-mix(in srgb, var(--black) 55%, transparent);
-    /** Section titles, timeline pills, skill name pills, and Experience's divider bars and markers; em of 40 px. drop-shadow() has no spread, so the second layer's 3 px is dropped **/
-    --drop-shadow-elevation: 0em 0.025em 0.075em color-mix(in srgb, var(--black) 30%, transparent),
+    /** Section titles, timeline pills, Technical Skills category headers and name pills, and Experience's divider bars and markers; em of 40 px. drop-shadow() has no spread, so the second layer's 3 px is dropped **/
+    --drop-shadow-elevation: 0em 0.025em 0.075em color-mix(in srgb, var(--black) 40%, transparent),
                              0em 0.1em   0.2em   color-mix(in srgb, var(--black) 15%, transparent);
     /** Soft glow behind the Education monogram and the dimmed Technical Skills logos, lifting them off the gray background; in em of the surrounding text-degree, so it scales with the rows **/
     --drop-shadow-logo: 0em 0em 0.3em color-mix(in srgb, var(--black) 35%, transparent),
@@ -297,10 +336,28 @@
     }
 }
 
-/* Canvas color behind RouteBackground; prevents white flashes on overscroll */
 @layer base {
     html {
+        /* Canvas color behind RouteBackground; prevents white flashes on overscroll */
         background-color: var(--dark-gray);
+
+        /* Smooth Scrolling */
+        /** In-page jumps, like a ScrollNet point's, glide instead of cutting; wheel, touch, and keyboard scrolling stay native, on the compositor, so they never wait on the page's own animations **/
+        /** data-scroll-behavior on <html> has Next set this aside during route changes, so every new page starts at its top instantly **/
+        @media (prefers-reduced-motion: no-preference) {
+            scroll-behavior: smooth;
+        }
+    }
+
+    /* Hidden Scrollbars */
+    /** No native scrollbar anywhere on the site, including inner scroll areas; ScrollNet shows the position on pages that scroll **/
+    * {
+        scrollbar-width: none;
+    }
+
+    /** Safari before 18.2 only hides it through the WebKit pseudo-element **/
+    ::-webkit-scrollbar {
+        display: none;
     }
 }
 
@@ -327,6 +384,20 @@
     background-size: 18.75% 100%;
     background-repeat: no-repeat;
     background-color: var(--tinted-gray);
+}
+
+/* Scroll Reveal */
+/** One transition for every ScrollSection and every ScrollNet point, so a section's fade and its point's change always share one clock; knobs live in :root **/
+/** Under reduced motion both change at once; ScrollSection never hides then, so only the points switch **/
+@utility scroll-reveal {
+    transition-property: opacity, translate;
+    transition-duration: var(--scroll-reveal-duration);
+    transition-timing-function: var(--scroll-reveal-ease);
+    transition-delay: var(--scroll-reveal-delay);
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
 }
 
 /* Spotlight Strength */

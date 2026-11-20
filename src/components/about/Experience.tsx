@@ -7,7 +7,10 @@ import { experiences } from "@/lib/data/about";
 // The list spans layout columns 2–11, leaving one empty column on each side and lining up with the title
 export function Experience() {
     return (
-        <AboutSection title="Professional Experience">
+        <AboutSection
+            id="experience"
+            title="Professional Experience"
+        >
             <div className="grid-about">
                 <ol className="col-span-10 col-start-2 flex flex-col gap-experience text-paragraph text-white">
                     {experiences.map((experience, i) => (

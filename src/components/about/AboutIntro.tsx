@@ -6,7 +6,10 @@ import { Paragraph } from "@/components/ui/Paragraph";
 // First About section: the headshot over its net, then the introduction
 export function AboutIntro() {
     return (
-        <AboutSection className="text-center">
+        <AboutSection
+            id="introduction"
+            className="text-center"
+        >
             <Headshot />
             <Paragraph>
                 Hey there! My name is Ryland Mata, and I am a <AccentText>full-stack developer</AccentText> with

@@ -21,7 +21,7 @@ export function SkillCategoryEntry({ category }: { category: SkillCategory }) {
     const name = category.skills[active]?.name ?? "";
     return (
         <div>
-            <h3 className="text-center font-koulen text-skill-category text-white">{category.title}</h3>
+            <h3 className="text-center font-koulen text-skill-category drop-shadow-elevation text-white">{category.title}</h3>
 
             <ul className="mt-skill-logos grid-about items-center text-degree">
                 {category.skills.map((skill, i) => (

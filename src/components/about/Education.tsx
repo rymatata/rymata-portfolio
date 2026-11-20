@@ -8,7 +8,10 @@ import { education } from "@/lib/data/about";
 // Row: monogram on columns 4–5 at 90% of their width, its height from the SVG's own ratio; degree from column 6
 export function Education() {
     return (
-        <AboutSection title="Education">
+        <AboutSection
+            id="education"
+            title="Education"
+        >
             <div className="mb-degree grid-about items-center text-degree">
                 <Image
                     src={education.logo.src}

@@ -65,7 +65,7 @@ rymata-portfolio/
 │   │       └── about/page.tsx                  # /about
 │   │
 │   ├── components/
-│   │   ├── layout/                             # Persistent components: SideNav, RouteBackground, etc.
+│   │   ├── layout/                             # Persistent components: SideNav, RouteBackground, ScrollNet (site scrollbar for scrolling pages), etc.
 │   │   ├── ui/                                 # Shared primitives
 │   │   ├── contact/                            # ContactForm (client: react-hook-form + zod)
 │   │   └── about/  home/  projects/  resume/   # Page-specific components
@@ -73,11 +73,12 @@ rymata-portfolio/
 │   └── lib/
 │       ├── data/                               # Site content as typed TS
 │       ├── intro.ts                            # First-load Home intro: pre-paint <head> script and data-intro gate (tokens in globals.css)
+│       ├── scroll-net.ts                       # ScrollNet's column layout, drift, and dot shading, plus its noscript fallback
 │       ├── schemas/contact.ts                  # Zod schema shared by ContactForm and actions.ts
 │       ├── parallax-net/                       # Vanta NET in raw WebGL2: shaders and gpu (painter shared by both renderers)
 │       │                                       #   3D route background (per-variant NET/CAMERA in scene.ts): scene, motion (shared by every variant), renderer
 │       │                                       #   2D About headshot net (FLAT_NET, own clock): flat-scene, flat-renderer
-│       └── hooks/                              # Custom React hooks
+│       └── hooks/                              # Custom React hooks: useScrollSpy (the section the scroll has reached, for ScrollNet)
 │
 ├── next.config.ts
 ├── tsconfig.json                               # Strict mode, "@/*" → "./src/*"
